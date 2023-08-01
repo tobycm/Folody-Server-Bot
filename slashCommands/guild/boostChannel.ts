@@ -7,7 +7,7 @@ import {
 import { SlashCommand } from "modules/command";
 
 const boostChannelCommandData = new SlashCommandBuilder()
-  .setName("boostChannel")
+  .setName("boost_channel")
   .setDescription("Set boost channel hoặc xem boost channel đã được cài đặt");
 
 boostChannelCommandData.addChannelOption((option) =>
