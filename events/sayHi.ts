@@ -6,20 +6,21 @@ import Event from "modules/event";
 async function sayHi(message: Message) {
   if (message.author.bot) return;
 
-  if (
-    message.channel.messages.cache.find((m) => {
-      if (m.author !== message.author) return false;
+  const authorMessages = message.channel.messages.cache.filter(
+    (m) => m.author === message.author
+  );
 
-      if (m.createdTimestamp < message.createdTimestamp - 1000 * 60 * 60)
-        return false; // 1 hour
-      return true;
-    })
-  ) {
-    message.channel.send(`Wassup ${userMention(message.author.id)}`);
+  for (const msg of authorMessages.values()) {
+    if (message === msg) continue;
+    if (msg.createdTimestamp < message.createdTimestamp - 1000 * 60 * 60)
+      return;
+    else
+      return message.channel.send(`Wassup ${userMention(message.author.id)}`);
   }
 }
 
 export default new Event({
+  disabled: true,
   eventName: Events.MessageCreate,
   run: sayHi,
 });
