@@ -1,6 +1,6 @@
 // chào mem xd, ko hỉu thì đọc code đi xd
 
-import { Events, Message, userMention } from "discord.js";
+import { Events, Message } from "discord.js";
 import Event from "modules/event";
 
 async function sayHi(message: Message) {
@@ -12,15 +12,13 @@ async function sayHi(message: Message) {
 
   for (const msg of authorMessages.values()) {
     if (message === msg) continue;
-    if (msg.createdTimestamp < message.createdTimestamp - 1000 * 60 * 60)
+    if (message.createdTimestamp - msg.createdTimestamp < 1000 * 60 * 60)
       return;
-    else
-      return message.channel.send(`Wassup ${userMention(message.author.id)}`);
+    else return message.channel.send(`Wassup ${message.author}`);
   }
 }
 
 export default new Event({
-  disabled: true,
   eventName: Events.MessageCreate,
   run: sayHi,
 });
