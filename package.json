@@ -13,8 +13,11 @@
     },
     "dependencies": {
         "better-sqlite3": "^8.5.0",
+        "canvas": "^2.11.2",
+        "canvas-constructor": "^7.0.1",
         "discord.js": "^14.12.1",
-        "quick.db": "^9.1.7"
+        "quick.db": "^9.1.7",
+        "weird-to-normal-chars": "^1.8.3"
     },
     "scripts": {
         "start": "tsx Folody",
