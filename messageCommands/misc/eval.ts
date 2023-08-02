@@ -20,9 +20,9 @@ async function evalCommand(message: Message<true>) {
   else if (code.startsWith("```") && code.endsWith("```"))
     code = code.slice(3, -3);
 
-  let eval_result = await eval("async function run() {" + code + "}; run()");
-
   try {
+    const eval_result = await eval("(async () =>{" + code + "})()");
+
     await message.reply(codeBlock("js", inspect(eval_result, false, 0)));
   } catch (error) {
     await message.reply(codeBlock("js", String(error)));
