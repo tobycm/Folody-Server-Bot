@@ -10,6 +10,9 @@ async function sayHi(message: Message) {
     (m) => m.author === message.author
   );
 
+  if (authorMessages.size === 0 || authorMessages.size === 1)
+    return message.channel.send(`Wassup ${message.author}`);
+
   for (const msg of authorMessages.values()) {
     if (message === msg) continue;
     if (message.createdTimestamp - msg.createdTimestamp < 1000 * 60 * 60)
