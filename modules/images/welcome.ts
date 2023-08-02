@@ -1,4 +1,4 @@
-import { loadImage, registerFont } from "canvas";
+import { Image, loadImage, registerFont } from "canvas";
 import { Canvas } from "canvas-constructor/cairo";
 import { GuildMember } from "discord.js";
 import { weirdToNormalChars } from "weird-to-normal-chars";
@@ -8,9 +8,22 @@ registerFont("./assets/DejaVuSansCondensed-Bold.ttf", {
   family: "Discordx",
 });
 
-const background = await loadImage(
-  "https://cdn.discordapp.com/attachments/1123259943735275652/1130682229337628714/Untitled_design.png"
-);
+const pictures = [
+  "https://cdn.discordapp.com/attachments/955639718815621151/1136098424312320041/1690937289044.jpg", // thx cauvang 870825189586378843
+  "https://cdn.discordapp.com/attachments/1123259943735275652/1130682229337628714/Untitled_design.png", // thx denki 857177948057370624
+];
+
+const pictureCache = new Map<string, Image>();
+
+export async function getPicture(): Promise<Image> {
+  const theChosenPicture =
+    pictures[Math.floor(Math.random() * pictures.length)];
+  if (pictureCache.has(theChosenPicture))
+    return pictureCache.get(theChosenPicture)!;
+  const picture = await loadImage(theChosenPicture);
+  pictureCache.set(theChosenPicture, picture);
+  return picture;
+}
 
 export default async function WelcomeCard(
   member: GuildMember
@@ -24,7 +37,7 @@ export default async function WelcomeCard(
   );
 
   return new Canvas(1024, 450)
-    .printImage(background, 0, 0, 1024, 450)
+    .printImage(await getPicture(), 0, 0, 1024, 450)
     .setColor("#FFFFFF")
     .printCircle(512, 155, 120)
     .printCircularImage(avatar, 512, 155, 115)
