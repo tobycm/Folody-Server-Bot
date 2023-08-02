@@ -18,10 +18,7 @@ async function onGuildMemberAdd(member: GuildMember) {
 
   if (!welcomeChannel) return;
   await welcomeChannel.send({
-    content:
-      `Chào mừng ${member.user}!\n` +
-      `Bạn là thành viên thứ ${member.guild.memberCount} của server!\n` +
-      "Chúc bạn có trải nhiệm tuyệt vời tại đây",
+    content: `<:pepehooray:1125131846267711488> ${member.user}\n**<:folody:933915537233289336> Hi there!**\n- Please read ⁠<#955639800168316998>\n- Hope you have a good time in our server\n\n<:hithere:1131104394750984202> <@&993522874897940540> | <@&960561360624840724> Say hi to new member <:hithere:1131104394750984202>\nThere's a \`${member.guild.memberCount}\` member coming in <:whatsup:1124364311230431293>`,
     files: [
       new AttachmentBuilder(await WelcomeCard(member), {
         name: "welcome.png",
