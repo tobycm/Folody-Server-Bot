@@ -29,6 +29,7 @@ async function sayHi(message: Message) {
 }
 
 export default new Event({
+  disabled: true, // hư quá nên tạm disable v :>
   eventName: Events.MessageCreate,
   run: sayHi,
 });
