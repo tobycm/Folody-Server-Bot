@@ -85,11 +85,11 @@ export default new Event({
         if (percent >= 80 && !(percent >= 85))
           /* tieu hung */ quẻ =
             `Bạn %mention% đã rút ra quẻ **Tiểu Hung** :v\n\n` +
-            `Khá là đen đủi cho bạn, lại đây chơi cùng Folody-kun cho giải xui nào :luvyou:`;
+            `Khá là đen đủi cho bạn, lại đây chơi cùng Folody-kun cho giải xui nào <:luvyou:1130475681084604436>`;
         if (percent >= 85 && !(percent >= 97))
           /* ban hung */ quẻ =
             `Bạn %mention% đã rút ra quẻ **Bán Hung** đừng buồn nha\n\n` +
-            `(◕︵◕) Đừng để những điều xui xẻo làm bạn tiêu cực :ohmaigah:`;
+            `(◕︵◕) Đừng để những điều xui xẻo làm bạn tiêu cực <:ohmaigah:1131095848093220885>`;
         if (percent >= 97)
           /* mat hung */ quẻ =
             `Bạn %mention% đã rút ra quẻ **Mạt Hung** U là trời\n\n` +
@@ -113,7 +113,7 @@ export default new Event({
 });
 
 const onCooldownMessages = [
-  "đã rút quẻ hôm nay rùi, mai quay lại sau he :3",
-  "tham lam dữ z, đợi đến ngày mai đi >:3",
-  "đã hết lượt, chúc bạn may mắn ngày mai <:luvyou:1130475681084604436>",
+  " đã rút quẻ hôm nay rùi, mai quay lại sau he :3",
+  " tham lam dữ z, đợi đến ngày mai đi >:3",
+  " đã hết lượt, chúc bạn may mắn ngày mai <:luvyou:1130475681084604436>",
 ];
