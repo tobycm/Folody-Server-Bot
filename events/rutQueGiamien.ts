@@ -18,7 +18,7 @@ export default new Event({
         (await (await folody.guilds.fetch(
           "911173438708785153"
         ))!.channels.fetch("1133045965889216596")) as TextChannel
-      ).messages.fetch("1133045965889216596")
+      ).messages.fetch("1133387885857480894")
     )
       .createReactionCollector()
       .on("collect", async (reaction: MessageReaction, user: User) => {
