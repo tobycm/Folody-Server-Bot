@@ -38,11 +38,11 @@ export default new Event({
                 Math.floor(Math.random() * onCooldownMessages.length)
               ]
           );
-          setTimeout(() => reply.delete(), 10000);
+          setTimeout(() => reply.delete(), 7000);
           return;
         }
 
-        const percent = Math.round(Math.random() * 100);
+        const percent = Math.round(Math.random() * 100) + 1;
 
         let quẻ = "";
 
@@ -108,7 +108,7 @@ export default new Event({
           Date.now() + 86400000
         );
 
-        setTimeout(() => msg.delete(), 10000);
+        setTimeout(() => msg.delete(), 17000);
       }),
 });
 
