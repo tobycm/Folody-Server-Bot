@@ -24,7 +24,7 @@ async function onGuildMemberRemove(member: GuildMember) {
 
   welcomeChannel.send({
     content:
-      `> <:pepecri:1125136278095142912> Aw man, ${member.user} was leave the server, i hope they will comeback soon :<`
+      `> <:pepecri:1125136278095142912> Aw man, ${member.user} [\`${member.user.tag}\`] (\`${member.user.id}\`) đã rời xa khỏi server, mong bạn đó quay lại sớm :<`
   });
 }
 
