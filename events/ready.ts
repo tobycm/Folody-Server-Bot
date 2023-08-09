@@ -3,6 +3,20 @@ import Event from "../modules/event";
 
 async function onReady(folody: Client) {
   console.log(`Logged in as ${folody.user!.tag}!`);
+
+  try{
+      // activity case
+      setInterval(() => {
+        const statuses = [
+          `<:folody:933915537233289336> Folody Studio | f!help`,
+          `<:leuleu:1135840069257805895> f!help for help | f!help`,
+          `<:mrStorm:1120554787298086943> chat to become Chad | f!help`,
+        ]
+
+        const status = statuses[Math.floor(Math.random() * statuses.length)]
+        folody.user.setActivity(status, { type: 'LISTENING'})
+      }, 2000) 
+    } catch (e) { console.log(String(e.stack)) }
 }
 
 export default new Event({
