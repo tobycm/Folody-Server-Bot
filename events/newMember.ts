@@ -11,10 +11,7 @@ import WelcomeCard from "modules/images/welcome";
 async function onGuildMemberAdd(member: GuildMember) {
   const folody = member.client as Folody;
 
-  const welcomeChannel = member.guild.channels.cache.get(
-    (await folody.db.get<string>(`${member.guild.id}.channel.welcome`)) ??
-      "955639718815621151"
-  ) as GuildTextBasedChannel;
+  const welcomeChannel = await member.guild.channels.fetch('955639718815621151') as GuildTextBasedChannel;
 
   if (!welcomeChannel) return;
 
