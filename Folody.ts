@@ -120,18 +120,7 @@ export default class Folody extends Client {
 }
 
 const folody = new Folody({
-  intents: [
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.MessageContent,
-    GatewayIntentBits.GuildEmojisAndStickers,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildModeration,
-    GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.Guilds,
-  ],
+  intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
   version: package_json.version,
   prefix: config.bot.prefix,
 
