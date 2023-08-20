@@ -55,21 +55,36 @@ async function helpCommand(message: Message<true>) {
     return message.reply({ embeds: [embed] });
   }
 
-  // const categories = new Set();
-  // for (const command of folody.messageCommands.values())
-  //     categories.add(command.category);
+  const categories = new Map<string, MessageCommand[]>();
+  for (const command of folody.messageCommands.values()) {
+    if (command.managerOnly || command.ownerOnly) continue;
 
-  message.reply({
-    embeds: [
-      {
-        title: "Help",
-        description: `Use \`${await folody.getPrefix(
-          message.guild.id
-        )}help <command>\` to get more information about a command.`,
-        color: folody.branding.embedColor,
-      },
-    ],
-  });
+    const category = command.category ?? "Uncategorized";
+    if (!categories.has(category)) return categories.set(category, [command]);
+    categories.get(category)!.push(command);
+  }
+
+  const embed = new EmbedBuilder()
+    .setAuthor({
+      name: "Help",
+      iconURL: folody.user!.displayAvatarURL(),
+    })
+    .setTitle("Help")
+    .setColor(folody.branding.embedColor)
+    .setFooter({
+      text: `Requested by ${message.author.tag}`,
+      iconURL: message.author.displayAvatarURL(),
+    })
+    .setTimestamp();
+
+  for (const [category, commands] of categories) {
+    embed.addFields({
+      name: category,
+      value: commands.map((command) => inlineCode(command.name)).join(", "),
+    });
+  }
+
+  message.reply({ embeds: [embed] });
 }
 
 export default new MessageCommand({
