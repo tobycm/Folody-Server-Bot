@@ -12,7 +12,10 @@ export default new MessageCommand({
       return message.channel.send("Usage: `custom_tag <tag> ||| <content>`");
     }
 
-    const [tag, ...rest] = content.join(" ").split("|||");
+    const [tag, ...rest] = content
+      .join(" ")
+      .split("|||")
+      .map((x) => x.trim());
 
     if (!message.inGuild()) return;
 
