@@ -7,7 +7,13 @@ export default new MessageCommand({
   name: "custom_tag",
   aliases: ["ct"],
   description: "Custom tag command",
-  async run(message, tag, ...content) {
+  async run(message, ...content) {
+    if (content.length < 2) {
+      return message.channel.send("Usage: `custom_tag <tag> ||| <content>`");
+    }
+
+    const [tag, ...rest] = content.join(" ").split("|||");
+
     if (!message.inGuild()) return;
 
     const folody = message.client as Folody;
@@ -16,11 +22,11 @@ export default new MessageCommand({
       (await folody.db.get<CustomTags>(`${message.guild.id}.customTags`)) || {};
 
     customTags[tag] = {
-      content: content.join(" "),
+      content: rest.join(" "),
       author: message.author.id,
     };
 
-    await folody.db.set(`${message.guild.id}.customTags`, customTags);
+    folody.db.set(`${message.guild.id}.customTags`, customTags);
 
     message.channel.send(`Đã tạo tag ${inlineCode(tag)} thành công!`);
   },
