@@ -1,6 +1,11 @@
 import Folody from "Folody";
-import { SlashCommandBuilder } from "discord.js";
+import {
+  GuildMember,
+  PermissionFlagsBits,
+  SlashCommandBuilder,
+} from "discord.js";
 import { SlashCommand } from "modules/command";
+import { NoPermissions } from "modules/exceptions/guild";
 import CustomTags from "modules/models/custom_tags";
 
 const data = new SlashCommandBuilder()
@@ -18,10 +23,16 @@ data
 export default new SlashCommand({
   data,
   async run(interaction) {
+    if (!interaction.inGuild()) return;
+    if (
+      !(interaction.member as GuildMember).permissions.has(
+        PermissionFlagsBits.ManageMessages
+      )
+    )
+      throw new NoPermissions();
+
     const tag = interaction.options.getString("tag", true);
     const content = interaction.options.getString("content", true);
-
-    if (!interaction.inGuild()) return;
 
     const folody = interaction.client as Folody;
 
