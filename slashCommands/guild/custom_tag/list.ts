@@ -29,7 +29,10 @@ export default new SlashCommand({
     const embed = new EmbedBuilder().setTitle("Custom tags");
 
     for (const [tag, { content }] of Object.entries(customTags)) {
-      embed.addFields({ name: inlineCode(tag), value: codeBlock(content) });
+      embed.addFields({
+        name: inlineCode(tag) + ":",
+        value: codeBlock(content),
+      });
     }
 
     interaction.reply({ embeds: [embed] });
