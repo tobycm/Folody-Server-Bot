@@ -4,10 +4,10 @@ import Folody from "Folody";
 import { MessageCommand } from "modules/command";
 import { Optional } from "modules/usageArgumentTypes";
 
-async function helpCommand(message: Message<true>) {
+async function helpCommand(message: Message, commandName?: string) {
+  if (!message.guild) return;
   const folody = message.client as Folody;
 
-  const commandName = message.content.split(" ")[1];
   if (commandName) {
     const command = folody.messageCommands.get(commandName);
     if (!command) return message.reply("Command not found.");
@@ -60,7 +60,12 @@ async function helpCommand(message: Message<true>) {
     if (command.managerOnly || command.ownerOnly) continue;
 
     const category = command.category ?? "Uncategorized";
-    if (!categories.has(category)) return categories.set(category, [command]);
+    if (!categories.has(category)) {
+      categories.set(category, [command]);
+      continue;
+    }
+    if (categories.get(category)?.find((c) => c.name === command.name))
+      continue;
     categories.get(category)!.push(command);
   }
 
@@ -80,7 +85,7 @@ async function helpCommand(message: Message<true>) {
   for (const [category, commands] of categories) {
     embed.addFields({
       name: category,
-      value: commands.map((command) => inlineCode(command.name)).join(", "),
+      value: commands.map((command) => inlineCode(command.name)).join("\n"),
     });
   }
 
