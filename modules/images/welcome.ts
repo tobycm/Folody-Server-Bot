@@ -11,6 +11,7 @@ registerFont("./assets/DejaVuSansCondensed-Bold.ttf", {
 const pictures = [
   "https://cdn.discordapp.com/attachments/955639718815621151/1136098424312320041/1690937289044.jpg", // thx cauvang 870825189586378843
   "https://cdn.discordapp.com/attachments/1123259943735275652/1130682229337628714/Untitled_design.png", // thx denki 857177948057370624
+  "https://media.discordapp.net/attachments/955639718815621151/1142993577006338188/20230820_182718.jpg", // background cháy như vsus
 ];
 
 const pictureCache = new Map<string, Image>();
