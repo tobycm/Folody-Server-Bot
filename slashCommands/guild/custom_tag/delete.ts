@@ -11,7 +11,7 @@ import CustomTags from "modules/models/custom_tags";
 
 const data = new SlashCommandBuilder()
   .setName("delete_custom_tag")
-  .setDescription("List custom tags command");
+  .setDescription("Delete a custom tag");
 
 data.addStringOption((option) =>
   option.setName("tag").setDescription("Tag name").setRequired(true)
