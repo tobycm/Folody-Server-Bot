@@ -10,16 +10,12 @@ import { NoPermissions } from "modules/exceptions/guild";
 import CustomTags from "modules/models/custom_tags";
 
 const data = new SlashCommandBuilder()
-  .setName("custom_tag")
-  .setDescription("Custom tag command");
+  .setName("delete_custom_tag")
+  .setDescription("List custom tags command");
 
-data
-  .addStringOption((option) =>
-    option.setName("tag").setDescription("Tag name").setRequired(true)
-  )
-  .addStringOption((option) =>
-    option.setName("content").setDescription("Tag content").setRequired(true)
-  );
+data.addStringOption((option) =>
+  option.setName("tag").setDescription("Tag name").setRequired(true)
+);
 
 export default new SlashCommand({
   data,
@@ -32,9 +28,6 @@ export default new SlashCommand({
     )
       throw new NoPermissions();
 
-    const tag = interaction.options.getString("tag", true);
-    const content = interaction.options.getString("content", true);
-
     const folody = interaction.client as Folody;
 
     const customTags =
@@ -42,13 +35,19 @@ export default new SlashCommand({
         `${interaction.guild!.id}.customTags`
       )) || {};
 
-    customTags[tag] = { content, author: interaction.user.id };
+    const tag = interaction.options.getString("tag", true);
+
+    if (!customTags[tag]) {
+      return interaction.reply(`Tag ${tag} không tồn tại!`);
+    }
+
+    delete customTags[tag];
 
     folody.db.set<CustomTags>(
       `${interaction.guild!.id}.customTags`,
       customTags
     );
 
-    interaction.reply(`Đã tạo tag ${inlineCode(tag)} thành công!`);
+    interaction.reply(`Đã xóa tag ${inlineCode(tag)} thành công!`);
   },
 });
