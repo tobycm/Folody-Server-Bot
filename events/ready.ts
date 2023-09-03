@@ -1,5 +1,5 @@
 import { ActivityType, Client, Events } from "discord.js";
-import Event from "../modules/event";
+import Event from "modules/event";
 
 async function onReady(folody: Client) {
   console.log(`Logged in as ${folody.user!.tag}!`);

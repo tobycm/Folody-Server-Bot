@@ -5,8 +5,8 @@ import {
   MessageType,
   userMention,
 } from "discord.js";
-import Folody from "../Folody";
-import Event from "../modules/event";
+import Folody from "Folody";
+import Event from "modules/event";
 
 async function onGuildBooster(message: Message) {
   if (message.author.bot || message.inGuild()) return;

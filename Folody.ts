@@ -26,6 +26,7 @@ interface BrandingOptions {
     error: string;
     loading: string;
   };
+  banners: string[];
 }
 
 interface Options extends ClientOptions {
@@ -60,6 +61,7 @@ export default class Folody extends Client {
         error: "<a:alert:1081902415701356605>",
         loading: "<a:loading:1027196377245155348>",
       },
+      banners: [],
     };
 
     loadEvents(this);
