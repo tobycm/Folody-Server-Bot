@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import { SlashCommand } from "modules/command";
 import { NoPermissions } from "modules/exceptions/guild";
-import CustomTags from "modules/models/custom_tags";
+import CustomTags from "modules/models/customTags";
 
 export default new SlashCommand({
   data: new SlashCommandBuilder()

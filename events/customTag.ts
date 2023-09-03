@@ -1,7 +1,7 @@
 import Folody from "Folody";
 import { Events } from "discord.js";
 import Event from "modules/event";
-import CustomTags from "modules/models/custom_tags";
+import CustomTags from "modules/models/customTags";
 
 export default new Event({
   eventName: Events.MessageCreate,
