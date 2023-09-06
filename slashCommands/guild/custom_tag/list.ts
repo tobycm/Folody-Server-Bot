@@ -1,5 +1,8 @@
 import Folody from "Folody";
 import {
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
   EmbedBuilder,
   GuildMember,
   PermissionFlagsBits,
@@ -35,15 +38,63 @@ export default new SlashCommand({
       return interaction.reply("Không có custom tag nào trong server này!");
     }
 
-    const embed = new EmbedBuilder().setTitle("Custom tags");
+    const embeds: EmbedBuilder[] = [];
+
+    let embed = new EmbedBuilder().setTitle("Custom tags");
+
+    let fields = 0;
 
     for (const [tag, { content }] of Object.entries(customTags)) {
+      fields++;
+      if (fields > 25) {
+        embeds.push(embed);
+        embed = new EmbedBuilder().setTitle("Custom tags");
+        fields = 0;
+      }
+
       embed.addFields({
         name: inlineCode(tag) + ":",
         value: codeBlock(content),
       });
     }
 
-    interaction.reply({ embeds: [embed] });
+    const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder()
+        .setCustomId("next")
+        .setLabel("Next")
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("previous")
+        .setLabel("Previous")
+        .setStyle(ButtonStyle.Primary)
+    );
+
+    (
+      await interaction.reply({
+        embeds: [embed],
+        components: [actionRow],
+      })
+    )
+      .createMessageComponentCollector({
+        filter: (itr) =>
+          itr.user.id === interaction.user.id &&
+          ["next", "previous"].includes(itr.customId),
+        time: 60000,
+      })
+      .on("collect", async (itr) => {
+        if (embeds.length === 0) {
+          itr.deferUpdate();
+          return;
+        }
+        if (itr.customId === "next") {
+          if (embeds.length === 0) {
+            itr.deferUpdate();
+            return;
+          }
+          embeds.shift() && itr.editReply({ embeds: [embeds[0]] });
+        } else {
+          embeds.pop() && itr.editReply({ embeds: [embeds[0]] });
+        }
+      });
   },
 });
