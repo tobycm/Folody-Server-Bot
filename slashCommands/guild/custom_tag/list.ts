@@ -45,8 +45,7 @@ export default new SlashCommand({
     let fields = 0;
 
     for (const [tag, { content }] of Object.entries(customTags)) {
-      fields++;
-      if (fields > 25) {
+      if (fields === 20) {
         embeds.push(embed);
         embed = new EmbedBuilder().setTitle("Custom tags");
         fields = 0;
@@ -56,6 +55,7 @@ export default new SlashCommand({
         name: inlineCode(tag) + ":",
         value: codeBlock(content),
       });
+      fields++;
     }
 
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
