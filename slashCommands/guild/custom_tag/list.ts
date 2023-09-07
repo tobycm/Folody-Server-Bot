@@ -60,19 +60,21 @@ export default new SlashCommand({
 
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId("next")
-        .setLabel("Next")
-        .setStyle(ButtonStyle.Primary),
-      new ButtonBuilder()
         .setCustomId("previous")
         .setLabel("Previous")
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setCustomId("next")
+        .setLabel("Next")
         .setStyle(ButtonStyle.Primary)
     );
+
+    let current = 0;
 
     (
       await interaction.reply({
         embeds: [embeds[0]],
-        components: [actionRow],
+        components: embeds.length > 1 ? [actionRow] : [],
       })
     )
       .createMessageComponentCollector({
@@ -82,19 +84,25 @@ export default new SlashCommand({
         time: 60000,
       })
       .on("collect", async (itr) => {
-        if (embeds.length === 0) {
-          itr.deferUpdate();
-          return;
-        }
         if (itr.customId === "next") {
-          if (embeds.length === 0) {
-            itr.deferUpdate();
+          if (current == embeds.length - 1) {
+            itr.reply({ content: "Có gì để next đâu bro", ephemeral: true });
             return;
           }
-          embeds.shift() && itr.editReply({ embeds: [embeds[0]] });
-        } else {
-          embeds.pop() && itr.editReply({ embeds: [embeds[0]] });
+          current++;
         }
+        if (itr.customId === "previous") {
+          if (current == 0) {
+            itr.reply({
+              content: "Có gì để quay lại đâu bro",
+              ephemeral: true,
+            });
+            return;
+          }
+          current--;
+        }
+        interaction.editReply({ embeds: [embeds[current]] });
+        itr.reply({ content: "👌", ephemeral: true });
       });
   },
 });
