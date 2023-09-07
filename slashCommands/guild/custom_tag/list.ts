@@ -102,7 +102,10 @@ export default new SlashCommand({
           }
           current--;
         }
-        interaction.editReply({ embeds: [embeds[current]] });
+        interaction.editReply({
+          content: `Trang ${current + 1} / ${embeds.length}`,
+          embeds: [embeds[current]],
+        });
         itr.reply({ content: "👌", ephemeral: true });
       });
   },
