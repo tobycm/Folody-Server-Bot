@@ -93,6 +93,8 @@ export default class Folody extends Client {
   }
 
   public async reportError(error: Error): Promise<void> {
+    console.error(error); // still good to log it to console
+
     const channel = await this.channels.fetch(config.bot.channels.error);
     if (!channel?.isTextBased()) return;
 
