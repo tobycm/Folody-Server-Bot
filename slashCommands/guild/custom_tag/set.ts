@@ -33,6 +33,9 @@ export default new SlashCommand({
       throw new NoPermissions();
 
     const tag = interaction.options.getString("tag", true);
+    if (tag.length > 100)
+      return interaction.reply("Tag dài quá bro, 100 ký tự thoy");
+
     const content = interaction.options.getString("content", true);
 
     const folody = interaction.client as Folody;

@@ -53,7 +53,7 @@ export default new SlashCommand({
 
       embed.addFields({
         name: inlineCode(tag) + ":",
-        value: codeBlock(content),
+        value: codeBlock(content.slice(0, 1000)),
       });
       fields++;
     }
