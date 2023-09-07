@@ -73,6 +73,7 @@ export default new SlashCommand({
 
     (
       await interaction.reply({
+        content: `Trang ${current + 1} / ${embeds.length}`,
         embeds: [embeds[0]],
         components: embeds.length > 1 ? [actionRow] : [],
       })
