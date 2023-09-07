@@ -71,7 +71,7 @@ export default new SlashCommand({
 
     (
       await interaction.reply({
-        embeds: [embed],
+        embeds: [embeds[0]],
         components: [actionRow],
       })
     )

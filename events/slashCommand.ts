@@ -64,7 +64,7 @@ async function slashCommand(interaction: Interaction) {
       if (!interaction.replied)
         interaction.reply("Có lỗi xảy ra khi chạy lệnh này :<");
       else interaction.followUp("Có lỗi xảy ra khi chạy lệnh này :<");
-      folody.reportError(error as { stack?: string; message: string });
+      folody.reportError(error as Error);
     }
   }
 }

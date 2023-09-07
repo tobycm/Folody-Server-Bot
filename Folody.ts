@@ -92,10 +92,7 @@ export default class Folody extends Client {
     this.db.set(`${guildID}.prefix`, prefix);
   }
 
-  public async reportError(error: {
-    stack?: string;
-    message: string;
-  }): Promise<void> {
+  public async reportError(error: Error): Promise<void> {
     const channel = await this.channels.fetch(config.bot.channels.error);
     if (!channel?.isTextBased()) return;
 

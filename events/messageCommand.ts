@@ -100,7 +100,7 @@ async function messageCommand(message: Message) {
       return message.reply(error.message);
 
     message.reply("Có lỗi xảy ra khi chạy lệnh này :<");
-    folody.reportError(error as { stack?: string; message: string });
+    folody.reportError(error as Error);
   }
 }
 
