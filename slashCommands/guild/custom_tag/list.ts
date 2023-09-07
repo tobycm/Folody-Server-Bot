@@ -45,7 +45,7 @@ export default new SlashCommand({
     let fields = 0;
 
     for (const [tag, { content }] of Object.entries(customTags)) {
-      if (fields === 20) {
+      if (fields === 20 || embed.length + tag.length + content.length > 6000) {
         embeds.push(embed);
         embed = new EmbedBuilder().setTitle("Custom tags");
         fields = 0;
