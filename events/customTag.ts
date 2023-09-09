@@ -14,7 +14,7 @@ export default new Event({
     const customTags =
       (await folody.db.get<CustomTags>(`${message.guild.id}.customTags`)) || {};
 
-    const customTag = customTags[message.content];
+    const customTag = customTags[message.content.toLowerCase()];
     if (!customTag) return;
 
     message.channel.send(customTag.content);
