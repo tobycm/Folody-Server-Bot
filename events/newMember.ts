@@ -18,13 +18,6 @@ async function onGuildMemberAdd(member: GuildMember) {
 
   if (!welcomeChannel) return;
 
-  if (member.user.id === "867741983774212166") {
-    welcomeChannel.send(`Có tên nào đấy vừa vào si vi nhưng do chúng tôi anti tên đấy nên bị đá đít luôn rồi :scream: :scream: :scream:`);
-    member.ban();
-    setTimeout(() => member.guild.members.unban("867741983774212166"), 5000);
-    return;
-  }
-
   if (member.user.bot)
     return welcomeChannel.send(
       `Có con npc ${member} vào si vi kìa men :scream: :scream: :scream:`

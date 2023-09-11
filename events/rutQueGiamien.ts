@@ -10,7 +10,14 @@ import {
 } from "discord.js";
 import Event from "modules/event";
 
+const onCooldownMessages = [
+  " đã rút quẻ hôm nay rùi, mai quay lại sau he :3",
+  " tham lam dữ z, đợi đến ngày mai đi >:3",
+  " đã hết lượt, chúc bạn may mắn ngày mai <:luvyou:1130475681084604436>",
+];
+
 export default new Event({
+  disabled: true,
   eventName: Events.ClientReady,
   run: async (folody) =>
     (
@@ -111,9 +118,3 @@ export default new Event({
         setTimeout(() => msg.delete(), 17000);
       }),
 });
-
-const onCooldownMessages = [
-  " đã rút quẻ hôm nay rùi, mai quay lại sau he :3",
-  " tham lam dữ z, đợi đến ngày mai đi >:3",
-  " đã hết lượt, chúc bạn may mắn ngày mai <:luvyou:1130475681084604436>",
-];
