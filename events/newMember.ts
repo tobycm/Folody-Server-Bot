@@ -22,6 +22,7 @@ async function onGuildMemberAdd(member: GuildMember) {
     welcomeChannel.send(`Có tên nào đấy vừa vào si vi nhưng do chúng tôi anti tên đấy nên bị đá đít luôn rồi :scream: :scream: :scream:`);
     member.ban();
     setTimeout(() => member.guild.members.unban("867741983774212166"), 5000);
+    return;
   }
 
   if (member.user.bot)
