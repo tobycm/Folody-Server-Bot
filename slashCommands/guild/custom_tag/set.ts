@@ -1,17 +1,14 @@
-import Folody from "Folody";
 import {
+  ActionRowBuilder,
   GuildMember,
+  ModalBuilder,
   PermissionFlagsBits,
   SlashCommandBuilder,
-  inlineCode,
-  ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-  ActionRowBuilder
 } from "discord.js";
 import { SlashCommand } from "modules/command";
 import { NoPermissions } from "modules/exceptions/guild";
-import CustomTags from "modules/models/customTags";
 
 const data = new SlashCommandBuilder()
   .setName("custom_tag")
@@ -29,26 +26,26 @@ export default new SlashCommand({
       throw new NoPermissions();
 
     const modal = new ModalBuilder()
-			.setCustomId('tag_modal')
-			.setTitle('Custom tag');
+      .setCustomId("tag_modal")
+      .setTitle("Custom tag");
 
     const name = new TextInputBuilder()
-      .setCustomId('tag_name')
+      .setCustomId("tag_name")
       .setLabel("Tag name")
-	    .setPlaceholder('Tag name')
-	    .setRequired(true);
+      .setPlaceholder("Tag name")
+      .setRequired(true)
       .setMaxLength(100)
-      .setMinLength(3)
+      .setMinLength(3);
 
     const content = new TextInputBuilder()
-      .setCustomId('tag_content')
+      .setCustomId("tag_content")
       .setLabel("Tag content")
-	    .setPlaceholder('Tag content')
-	    .setRequired(true);
+      .setPlaceholder("Tag content")
+      .setRequired(true)
       .setStyle(TextInputStyle.Paragraph);
 
     const firstActionRow = new ActionRowBuilder().addComponents(name);
-		const secondActionRow = new ActionRowBuilder().addComponents(content);
+    const secondActionRow = new ActionRowBuilder().addComponents(content);
     modal.addComponents(firstActionRow, secondActionRow);
 
     return interaction.showModal(modal);
