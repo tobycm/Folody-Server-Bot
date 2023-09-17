@@ -23,9 +23,14 @@ async function evalCommand(message: Message<true>) {
   try {
     const eval_result = await eval("(async () =>{" + code + "})()");
 
-    await message.reply(codeBlock("js", inspect(eval_result, false, 0)));
+    await message.reply(
+      codeBlock(
+        "js",
+        String(inspect(eval_result, false, 0)).replaceAll("`", "\\`")
+      )
+    );
   } catch (error) {
-    await message.reply(codeBlock("js", String(error)));
+    await message.reply(codeBlock("js", String(error).replaceAll("`", "\\`")));
   }
 }
 
