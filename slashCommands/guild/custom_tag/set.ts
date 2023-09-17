@@ -1,25 +1,18 @@
-import Folody from "Folody";
 import {
+  ActionRowBuilder,
   GuildMember,
+  ModalBuilder,
   PermissionFlagsBits,
   SlashCommandBuilder,
-  inlineCode,
+  TextInputBuilder,
+  TextInputStyle,
 } from "discord.js";
 import { SlashCommand } from "modules/command";
 import { NoPermissions } from "modules/exceptions/guild";
-import CustomTags from "modules/models/customTags";
 
 const data = new SlashCommandBuilder()
   .setName("custom_tag")
   .setDescription("Custom tag command");
-
-data
-  .addStringOption((option) =>
-    option.setName("tag").setDescription("Tag name").setRequired(true)
-  )
-  .addStringOption((option) =>
-    option.setName("content").setDescription("Tag content").setRequired(true)
-  );
 
 export default new SlashCommand({
   data,
@@ -32,26 +25,33 @@ export default new SlashCommand({
     )
       throw new NoPermissions();
 
-    const tag = interaction.options.getString("tag", true);
-    if (tag.length > 100)
-      return interaction.reply("Tag dài quá bro, 100 ký tự thoy");
+    const modal = new ModalBuilder()
+      .setCustomId("tag_modal")
+      .setTitle("Custom tag");
 
-    const content = interaction.options.getString("content", true);
+    const name = new TextInputBuilder()
+      .setCustomId("tag_name")
+      .setLabel("Tag name")
+      .setPlaceholder("Tag name")
+      .setRequired(true)
+      .setMinLength(3)
+      .setMaxLength(100);
 
-    const folody = interaction.client as Folody;
+    const content = new TextInputBuilder()
+      .setCustomId("tag_content")
+      .setLabel("Tag content")
+      .setPlaceholder("Tag content")
+      .setRequired(true)
+      .setStyle(TextInputStyle.Paragraph);
 
-    const customTags =
-      (await folody.db.get<CustomTags>(
-        `${interaction.guild!.id}.customTags`
-      )) || {};
+    console.log(name.toJSON(), content.toJSON());
 
-    customTags[tag] = { content, author: interaction.user.id };
+    const firstActionRow =
+      new ActionRowBuilder<TextInputBuilder>().addComponents(name);
+    const secondActionRow =
+      new ActionRowBuilder<TextInputBuilder>().addComponents(content);
+    modal.addComponents(firstActionRow, secondActionRow);
 
-    folody.db.set<CustomTags>(
-      `${interaction.guild!.id}.customTags`,
-      customTags
-    );
-
-    interaction.reply(`Đã tạo tag ${inlineCode(tag)} thành công!`);
+    return interaction.showModal(modal);
   },
 });
