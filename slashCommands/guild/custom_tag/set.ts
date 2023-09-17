@@ -34,6 +34,7 @@ export default new SlashCommand({
       .setLabel("Tag name")
       .setPlaceholder("Tag name")
       .setRequired(true)
+      .setStyle(TextInputStyle.Short)
       .setMinLength(3)
       .setMaxLength(100);
 
