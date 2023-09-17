@@ -34,8 +34,8 @@ export default new SlashCommand({
       .setLabel("Tag name")
       .setPlaceholder("Tag name")
       .setRequired(true)
-      .setMaxLength(100)
-      .setMinLength(3);
+      .setMinLength(3)
+      .setMaxLength(100);
 
     const content = new TextInputBuilder()
       .setCustomId("tag_content")
@@ -44,8 +44,12 @@ export default new SlashCommand({
       .setRequired(true)
       .setStyle(TextInputStyle.Paragraph);
 
-    const firstActionRow = new ActionRowBuilder().addComponents(name);
-    const secondActionRow = new ActionRowBuilder().addComponents(content);
+    console.log(name.toJSON(), content.toJSON());
+
+    const firstActionRow =
+      new ActionRowBuilder<TextInputBuilder>().addComponents(name);
+    const secondActionRow =
+      new ActionRowBuilder<TextInputBuilder>().addComponents(content);
     modal.addComponents(firstActionRow, secondActionRow);
 
     return interaction.showModal(modal);
