@@ -44,8 +44,6 @@ export default new SlashCommand({
       .setRequired(true)
       .setStyle(TextInputStyle.Paragraph);
 
-    console.log(name.toJSON(), content.toJSON());
-
     const firstActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(name);
     const secondActionRow =
