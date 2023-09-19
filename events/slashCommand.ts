@@ -52,7 +52,7 @@ export default new Event({
       try {
         await command.completion(interaction);
       } catch (error) {
-        reportError(error);
+        folody.reportError(error as Error);
       }
     }
 
