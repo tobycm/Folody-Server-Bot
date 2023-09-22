@@ -34,6 +34,7 @@ export default new SlashCommand({
       .setLabel("Tag name")
       .setPlaceholder("Tag name")
       .setRequired(true)
+      .setStyle(TextInputStyle.Short)
       .setMinLength(3)
       .setMaxLength(100);
 
@@ -43,8 +44,6 @@ export default new SlashCommand({
       .setPlaceholder("Tag content")
       .setRequired(true)
       .setStyle(TextInputStyle.Paragraph);
-
-    console.log(name.toJSON(), content.toJSON());
 
     const firstActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(name);
