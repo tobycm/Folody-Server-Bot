@@ -6,7 +6,9 @@ let timeout = false;
 export default new Event({
   eventName: Events.MessageCreate,
   async run(message) {
-    if (timeout || message.author.id == "487597510559531009") return;
+    if (timeout || message.author.id != "487597510559531009") return;
+
+    timeout = true;
 
     setTimeout(
       () => {
@@ -17,6 +19,5 @@ export default new Event({
       },
       1000 * 60 * 20
     ); // 20 20 20 rule
-    timeout = true;
   },
 });
