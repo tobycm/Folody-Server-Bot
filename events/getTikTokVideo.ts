@@ -21,4 +21,5 @@ export default new Event({
       ],
     });
   },
+  disabled: true,
 });
