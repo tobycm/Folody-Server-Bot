@@ -30,7 +30,7 @@ async function setWelcomeChannelCommand(message: Message<true>) {
         ],
       });
     }
-    message.reply({
+    return message.reply({
       embeds: [
         {
           description: `Server này chưa có kênh chào mừng`,
