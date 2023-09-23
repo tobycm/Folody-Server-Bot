@@ -1,22 +1,19 @@
 import Folody from "Folody";
-import {
-  AttachmentBuilder,
-  Events,
-  GuildMember,
-  GuildTextBasedChannel,
-} from "discord.js";
+import { AttachmentBuilder, Events, GuildMember } from "discord.js";
 import Event from "modules/event";
 import WelcomeCard from "modules/images/welcome";
 
 async function onGuildMemberAdd(member: GuildMember) {
   const folody = member.client as Folody;
 
-  const welcomeChannel = member.guild.channels.cache.get(
-    (await folody.db.get<string>(`${member.guild.id}.channel.welcome`)) ??
-      "955639718815621151"
-  ) as GuildTextBasedChannel;
+  const welcomeChannelId = await folody.db.get<string>(
+    `${member.guild.id}.channel.welcome`
+  );
 
-  if (!welcomeChannel) return;
+  if (!welcomeChannelId) return;
+
+  const welcomeChannel = member.guild.channels.cache.get(welcomeChannelId);
+  if (!welcomeChannel?.isTextBased()) return;
 
   if (member.user.id === "867741983774212166") {
     welcomeChannel.send(

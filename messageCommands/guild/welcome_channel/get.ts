@@ -1,31 +1,31 @@
 import { channelMention } from "@discordjs/builders";
 import Folody from "Folody";
-import { Message } from "discord.js";
+import { EmbedBuilder, Message } from "discord.js";
 import { MessageCommand } from "modules/command";
 
 async function getWelcomeChannelCommand(message: Message<true>) {
   const folody = message.client as Folody;
 
-  const channelID = await folody.db.get(message.guild.id + ".channel.welcome");
+  const welcomeChannelId = await folody.db.get<string>(
+    `${message.guild.id}.channel.welcome`
+  );
 
-  if (!channelID)
-    message.reply({
+  if (!welcomeChannelId)
+    return message.reply({
       embeds: [
-        {
-          description: "Server này chưa có kênh chào mừng",
-          color: folody.branding.embedColor,
-        },
+        new EmbedBuilder()
+          .setDescription("Server này chưa có kênh chào mừng")
+          .setColor(folody.branding.embedColor),
       ],
     });
 
   message.reply({
     embeds: [
-      {
-        description: `Kênh chào mừng của server này là ${channelMention(
-          channelID
-        )}`,
-        color: folody.branding.embedColor,
-      },
+      new EmbedBuilder()
+        .setDescription(
+          `Kênh chào mừng của server này là ${channelMention(welcomeChannelId)}`
+        )
+        .setColor(folody.branding.embedColor),
     ],
   });
 }
