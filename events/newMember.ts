@@ -26,7 +26,7 @@ async function onGuildMemberAdd(member: GuildMember) {
 
   if (member.user.bot)
     return welcomeChannel.send(
-      `Có con npc ${member} vào si vi kìa men :scream: :scream: :scream:`
+      `Có con npc ${member.user} vào si vi kìa men :scream: :scream: :scream:`
     );
 
   welcomeChannel.send({
