@@ -33,11 +33,11 @@ export default new Event({
         )} nhé :>`
       );
 
-    if (
-      !message.content.startsWith(prefix) &&
-      !message.content.startsWith(userMention(folody.user.id))
-    )
-      return;
+    // if (
+    //   !message.content.startsWith(prefix) &&
+    //   !message.content.startsWith(userMention(folody.user.id))
+    // )
+    //   return;
 
     const [commandName, ...args] = message.content
       .slice(
