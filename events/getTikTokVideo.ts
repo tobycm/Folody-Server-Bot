@@ -5,10 +5,13 @@ import Event from "modules/event";
 export default new Event({
   eventName: Events.MessageUpdate,
   async run(message) {
+    if (!message.embeds[0]) return;
+    if (!message.embeds[0].url) return;
+
     const tiktokRegex =
       /^https:\/\/(www|v[a-z]{1}|[a-z])+\.(tiktok|tiktokv)\.com\/@?(\w.+)\//;
 
-    const matches = message.embeds[0].url?.match(tiktokRegex);
+    const matches = message.embeds[0].url.match(tiktokRegex);
     if (!matches) return;
 
     const id = matches[3];
