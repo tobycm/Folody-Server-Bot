@@ -21,11 +21,6 @@ export default new Event({
 
     const prefix = await folody.getPrefix(message.guild.id);
 
-    if (message.content.startsWith('ogive') || message.content.startsWith('owogive')) {
-      if (!(message.content.split(' '))[1] || isNan(Number((message.content.split(' '))[2])) || !(message.content.split(' '))[2]) return
-      else if ((message.content.split(' '))[1] === '<@926643835419910184>') return message.reply(`> <a:nhoamnhoam:1145729266517016606> cảm ơn bạn ${message.member} đã donate cho bọn mình **_${(message.content.split(' '))[2]}_ cowoncy** nha!`)
-    }
-    
     if (message.content == userMention(folody.user.id))
       return message.reply(
         `Prefix của bot là ${inlineCode(
@@ -33,11 +28,11 @@ export default new Event({
         )} nhé :>`
       );
 
-    // if (
-    //   !message.content.startsWith(prefix) &&
-    //   !message.content.startsWith(userMention(folody.user.id))
-    // )
-    //   return;
+    if (
+      !message.content.startsWith(prefix) &&
+      !message.content.startsWith(userMention(folody.user.id))
+    )
+      return;
 
     const [commandName, ...args] = message.content
       .slice(
