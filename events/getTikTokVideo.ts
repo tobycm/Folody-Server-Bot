@@ -6,7 +6,7 @@ export default new Event({
   eventName: Events.MessageUpdate,
   async run(message) {
     const tiktokRegex =
-      /^https:\/\/(www|v[a-z]{1}|[a-z])+\.(tiktok|tiktokv)\.com\/@?\w.+\/video\/(\d+)(.+)?$/;
+      /^https:\/\/(www|v[a-z]{1}|[a-z])+\.(tiktok|tiktokv)\.com\/@?(\w.+)\//;
 
     const matches = message.embeds[0].url?.match(tiktokRegex);
     if (!matches) return;
