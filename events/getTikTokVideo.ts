@@ -3,14 +3,12 @@ import { downloadOne } from "modules/TikTokDownloader";
 import Event from "modules/event";
 
 export default new Event({
-  eventName: Events.MessageCreate,
+  eventName: Events.MessageUpdate,
   async run(message) {
-    // ko bt regex có ổn ko
     const tiktokRegex =
-      /(@[a-zA-z0-9]*|.*)(\/.*\/|trending.?shareId=)([\d]*)/gm;
+      /^https:\/\/(www|v[a-z]{1}|[a-z])+\.(tiktok|tiktokv)\.com\/@?\w.+\/video\/(\d+)(.+)?$/;
 
-    const matches = message.content.match(tiktokRegex);
-
+    const matches = message.embeds[0].url?.match(tiktokRegex);
     if (!matches) return;
 
     const id = matches[3];
@@ -21,5 +19,4 @@ export default new Event({
       ],
     });
   },
-  disabled: true,
 });
