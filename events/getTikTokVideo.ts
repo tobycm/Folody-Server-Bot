@@ -13,11 +13,11 @@ export default new Event({
     const matches = message.embeds[0].url.match(tiktokRegex);
     if (!matches) return;
 
-    const id = matches[3];
-
     message.channel.send({
       files: [
-        new AttachmentBuilder(await downloadOne(id), { name: `${id}.mp4` }),
+        new AttachmentBuilder(await downloadOne(message.embeds[0].url), {
+          name: "tiktok.mp4",
+        }),
       ],
     });
   },
