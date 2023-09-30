@@ -1,5 +1,5 @@
 import Folody from "Folody";
-import { Events, GuildTextBasedChannel } from "discord.js";
+import { Events } from "discord.js";
 import Event from "modules/event";
 
 export default new Event({
@@ -7,12 +7,14 @@ export default new Event({
   async run(member) {
     const folody = member.client as Folody;
 
-    const welcomeChannel = member.guild.channels.cache.get(
-      (await folody.db.get<string>(`${member.guild.id}.channel.welcome`)) ??
-        "955639718815621151"
-    ) as GuildTextBasedChannel;
+    const welcomeChannelId = await folody.db.get<string>(
+      `${member.guild.id}.channel.welcome`
+    );
 
-    if (!welcomeChannel) return;
+    if (!welcomeChannelId) return;
+
+    const welcomeChannel = member.guild.channels.cache.get(welcomeChannelId);
+    if (!welcomeChannel?.isTextBased()) return;
 
     if (member.user.bot)
       return welcomeChannel.send(

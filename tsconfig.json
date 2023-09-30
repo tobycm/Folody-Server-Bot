@@ -9,7 +9,8 @@
     "rootDir": "./",
     "moduleResolution": "node",
     "paths": {
-      "*": ["./*"]
+      "*": ["./*"],
+      "tiktok-downloader": ["./modules/TikTokDownloader/index.ts"]
     },
     "types": ["bun-types"],
     "importHelpers": true,

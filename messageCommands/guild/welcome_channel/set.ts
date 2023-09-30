@@ -30,7 +30,7 @@ async function setWelcomeChannelCommand(message: Message<true>) {
         ],
       });
     }
-    message.reply({
+    return message.reply({
       embeds: [
         {
           description: `Server này chưa có kênh chào mừng`,
@@ -42,7 +42,7 @@ async function setWelcomeChannelCommand(message: Message<true>) {
 
   // TODO: check if channelID exists
 
-  folody.db.set(`${message.guild.id}.channel.welcome`, channel.id);
+  folody.db.set<string>(`${message.guild.id}.channel.welcome`, channel.id);
   message.reply({
     embeds: [
       {
