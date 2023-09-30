@@ -14,7 +14,7 @@ export default new Event({
     setTimeout(
       () => {
         message.channel.send(
-          `${userMention("487597510559531009")} nghỉ mắt đi toby`
+          `${userMention("487597510559531009")} nghỉ mắt đi nào :)`
         );
         folody.db.delete(`${message.author.id}.blinded`);
       },
