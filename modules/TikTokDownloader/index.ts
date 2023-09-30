@@ -15,6 +15,8 @@ headersWm.append(
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
 );
 
+const videoIdRegex = /https:\/\/www\.tiktok\.com\/@[^/]+\/video\/(\d+)/;
+
 async function downloadMedia(url: string): Promise<Buffer> {
   return Buffer.from(await (await fetch(url)).arrayBuffer());
 }
@@ -30,6 +32,15 @@ async function getVideoNoWM(id: string): Promise<string> {
   ).aweme_list[0].video.play_addr.url_list[0];
 }
 
-export async function downloadOne(id: string): Promise<Buffer> {
+async function getVideoId(url: string): Promise<string> {
+  const matches = (
+    await fetch(url, { method: "GET", headers: headersWm })
+  ).url.match(videoIdRegex);
+  if (!matches) throw new Error("Invalid TikTok URL");
+  return matches[1];
+}
+
+export async function downloadOne(url: string): Promise<Buffer> {
+  const id = await getVideoId(url);
   return await downloadMedia(await getVideoNoWM(id));
 }

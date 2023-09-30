@@ -8,8 +8,7 @@ export default new Event({
     if (!message.embeds[0]) return;
     if (!message.embeds[0].url) return;
 
-    const tiktokRegex =
-      /^https:\/\/(www|v[a-z]{1}|[a-z])+\.(tiktok|tiktokv)\.com\/@?(\w.+)\//;
+    const tiktokRegex = /https:\/\/www\.tiktok\.com\/@[^/]+\/video\/(\d+)/;
 
     const matches = message.embeds[0].url.match(tiktokRegex);
     if (!matches) return;
