@@ -3,7 +3,7 @@ import { downloadOne } from "modules/TikTokDownloader";
 import Event from "modules/event";
 
 const tiktokRegex =
-  /\bhttps?:\/\/(?:m|www|vm)\.tiktok\.com\/\S*?\b(?:(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)|(?=\w{7})(\w*?[A-Z\d]\w*)(?=\s|\/$))\b/;
+  /\bhttps?:\/\/(?:m|www|v.)\.tiktok\.com\/\S*?\b(?:(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)|(?=\w{7})(\w*?[A-Z\d]\w*)(?=\s|\/$))\b/;
 
 export default new Event({
   eventName: Events.MessageUpdate,
