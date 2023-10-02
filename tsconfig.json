@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "module": "ESNext",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": false,
-    "module": "ESNext",
     "rootDir": "./",
     "moduleResolution": "node",
     "paths": {
       "*": ["./*"],
       "tiktok-downloader": ["./modules/TikTokDownloader/index.ts"]
     },
-    "typeRoots": ["./node_modules/@types", "./Folody.d.ts"],
-    "outDir": "./build/",
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
