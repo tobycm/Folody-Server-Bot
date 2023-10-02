@@ -1,7 +1,7 @@
 import Folody from "Folody";
+import CustomTags from "database/models/customTags";
 import { Events, inlineCode } from "discord.js";
 import BotEvent from "modules/event";
-import CustomTags from "modules/models/customTags";
 
 export default new BotEvent({
   event: Events.InteractionCreate,

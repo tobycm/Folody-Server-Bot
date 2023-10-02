@@ -1,32 +1,25 @@
 import Folody from "Folody";
+import CustomTags from "database/models/customTags";
 import {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  GuildMember,
   PermissionFlagsBits,
   SlashCommandBuilder,
   codeBlock,
   inlineCode,
 } from "discord.js";
+import { checkPermissions } from "modules/checks/access";
+import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
-import { NoPermissions } from "modules/exceptions/guild";
-import CustomTags from "modules/models/customTags";
 
 export default new SlashCommand({
   data: new SlashCommandBuilder()
     .setName("list_custom_tag")
     .setDescription("List custom tags command"),
+  checks: [guildOnly, checkPermissions([PermissionFlagsBits.ManageMessages])],
   async run(interaction) {
-    if (!interaction.inGuild()) return;
-    if (
-      !(interaction.member as GuildMember).permissions.has(
-        PermissionFlagsBits.ManageMessages
-      )
-    )
-      throw new NoPermissions();
-
     const folody = interaction.client as Folody;
 
     const customTags =

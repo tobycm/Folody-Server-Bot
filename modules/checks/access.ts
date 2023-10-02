@@ -1,28 +1,52 @@
 import Folody from "Folody";
-import { Message, PermissionsBitField } from "discord.js";
-import { GuildExceptions } from "modules/exceptions";
+import {
+  AutocompleteInteraction,
+  ChatInputCommandInteraction,
+  Message,
+  PermissionResolvable,
+} from "discord.js";
+import { NoPermissions } from "modules/exceptions/guild";
 
-export function checkOwner(message: Message) {
+export function checkOwner(
+  message: Message | ChatInputCommandInteraction | AutocompleteInteraction
+) {
   const folody = message.client as Folody;
 
-  if (!folody.owners.includes(message.author.id))
-    throw new GuildExceptions.NoPermissions();
+  const id = message instanceof Message ? message.author.id : message.user.id;
+
+  if (!folody.owners.includes(id)) throw new NoPermissions();
 
   return true;
 }
 
-export function checkManager(message: Message) {
+export function checkManager(
+  message: Message | ChatInputCommandInteraction | AutocompleteInteraction
+) {
   const folody = message.client as Folody;
 
-  if (!folody.managers.includes(message.author.id))
-    throw new GuildExceptions.NoPermissions();
+  const id = message instanceof Message ? message.author.id : message.user.id;
+
+  if (!folody.managers.includes(id)) throw new NoPermissions();
 
   return true;
 }
 
-export function checkManageGuild(message: Message<true>) {
-  if (!message.member?.permissions.has(PermissionsBitField.Flags.ManageGuild))
-    throw new GuildExceptions.NoPermissions();
+export function checkPermissions(permissions: PermissionResolvable[]) {
+  return (
+    message:
+      | Message<true>
+      | ChatInputCommandInteraction
+      | AutocompleteInteraction
+  ) => {
+    if (
+      !(
+        message instanceof Message
+          ? message.member?.permissions
+          : message.memberPermissions
+      )?.has(permissions)
+    )
+      throw new NoPermissions();
 
-  return true;
+    return true;
+  };
 }

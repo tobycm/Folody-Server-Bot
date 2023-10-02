@@ -1,30 +1,21 @@
 import {
   ActionRowBuilder,
-  GuildMember,
   ModalBuilder,
   PermissionFlagsBits,
   SlashCommandBuilder,
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
+import { checkPermissions } from "modules/checks/access";
+import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
-import { NoPermissions } from "modules/exceptions/guild";
-
-const data = new SlashCommandBuilder()
-  .setName("custom_tag")
-  .setDescription("Custom tag command");
 
 export default new SlashCommand({
-  data,
+  data: new SlashCommandBuilder()
+    .setName("custom_tag")
+    .setDescription("Custom tag command"),
+  checks: [guildOnly, checkPermissions([PermissionFlagsBits.ManageMessages])],
   async run(interaction) {
-    if (!interaction.inGuild()) return;
-    if (
-      !(interaction.member as GuildMember).permissions.has(
-        PermissionFlagsBits.ManageMessages
-      )
-    )
-      throw new NoPermissions();
-
     const modal = new ModalBuilder()
       .setCustomId("tag_modal")
       .setTitle("Custom tag");

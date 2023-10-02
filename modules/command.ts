@@ -49,10 +49,10 @@ export class MessageCommand {
 }
 
 interface SlashCommandOptions {
-  managerOnly?: boolean;
-  ownerOnly?: boolean;
-  guildsOnly?: boolean;
   data: SlashCommandBuilder;
+  checks?: ((
+    interaction: ChatInputCommandInteraction | AutocompleteInteraction
+  ) => boolean | Promise<boolean>)[];
   run: (interaction: ChatInputCommandInteraction) => Promise<any>;
   completion?: (interaction: AutocompleteInteraction) => Promise<any>;
   disabled?: boolean;
@@ -61,9 +61,8 @@ interface SlashCommandOptions {
 export class SlashCommand {
   constructor(options: SlashCommandOptions) {
     this.data = options.data;
-    this.managerOnly = options.managerOnly ?? false;
-    this.ownerOnly = options.ownerOnly ?? false;
-    this.guildsOnly = options.guildsOnly ?? false;
+
+    this.checks = options.checks ?? [];
 
     this.run = options.run;
     this.completion = options.completion;
@@ -73,10 +72,7 @@ export class SlashCommand {
 
   public readonly data;
 
-  public readonly managerOnly;
-  public readonly ownerOnly;
-
-  public readonly guildsOnly;
+  public readonly checks;
 
   public readonly run;
   public readonly completion?;

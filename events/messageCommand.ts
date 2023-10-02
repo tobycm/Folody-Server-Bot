@@ -1,7 +1,7 @@
 import Folody from "Folody.js";
 import { Events, inlineCode, userMention } from "discord.js";
 import BotEvent from "modules/event.js";
-import { BaseExceptions } from "modules/exceptions/index.js";
+import { UserError } from "modules/exceptions/base";
 
 export default new BotEvent({
   event: Events.MessageCreate,
@@ -51,16 +51,14 @@ export default new BotEvent({
         const ok = await check(message);
         if (!ok) return;
       } catch (error) {
-        if (error instanceof BaseExceptions.UserError)
-          return message.reply(error.message);
+        if (error instanceof UserError) return message.reply(error.message);
       }
     }
 
     try {
       await command.run(message, ...args);
     } catch (error) {
-      if (error instanceof BaseExceptions.UserError)
-        return message.reply(error.message);
+      if (error instanceof UserError) return message.reply(error.message);
 
       message.reply("Có lỗi đã xảy ra khi chạy lệnh này :<");
       folody.reportError(error as Error);
