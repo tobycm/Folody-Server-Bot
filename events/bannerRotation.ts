@@ -1,9 +1,9 @@
 import Folody from "Folody";
 import { Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
-  eventName: Events.ClientReady,
+export default new BotEvent({
+  event: Events.ClientReady,
   async run(client) {
     const folodyCommunity = await client.guilds.fetch("911173438708785153");
 

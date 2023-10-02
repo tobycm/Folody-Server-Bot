@@ -1,9 +1,9 @@
 import Folody from "Folody";
 import { Events, userMention } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
-  eventName: Events.MessageCreate,
+export default new BotEvent({
+  event: Events.MessageCreate,
   async run(message) {
     const folody = message.client as Folody;
     if (!(await folody.db.get(`${message.author.id}.imBlind`))) return;

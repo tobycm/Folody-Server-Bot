@@ -5,10 +5,10 @@ import {
   userMention,
 } from "discord.js";
 import Folody from "Folody";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
-  eventName: Events.MessageCreate,
+export default new BotEvent({
+  event: Events.MessageCreate,
   async run(message) {
     if (message.author.bot || message.inGuild()) return;
 

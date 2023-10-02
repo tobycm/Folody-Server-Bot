@@ -1,10 +1,10 @@
 import Folody from "Folody";
 import { Events, inlineCode } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 import CustomTags from "modules/models/customTags";
 
-export default new Event({
-  eventName: Events.InteractionCreate,
+export default new BotEvent({
+  event: Events.InteractionCreate,
   async run(interaction) {
     if (!interaction.isModalSubmit()) return;
     if (interaction.customId === "tag_modal") {

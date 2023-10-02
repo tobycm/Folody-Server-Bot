@@ -1,9 +1,9 @@
 import Folody from "Folody";
 import { Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
-  eventName: Events.GuildMemberRemove,
+export default new BotEvent({
+  event: Events.GuildMemberRemove,
   async run(member) {
     const folody = member.client as Folody;
 

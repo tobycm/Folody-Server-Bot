@@ -8,7 +8,7 @@ import {
   User,
   userMention,
 } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
 const onCooldownMessages = [
   " đã rút quẻ hôm nay rùi, mai quay lại sau he :3",
@@ -16,9 +16,9 @@ const onCooldownMessages = [
   " đã hết lượt, chúc bạn may mắn ngày mai <:luvyou:1130475681084604436>",
 ];
 
-export default new Event({
+export default new BotEvent({
   disabled: true,
-  eventName: Events.ClientReady,
+  event: Events.ClientReady,
   run: async (folody) =>
     (
       await (

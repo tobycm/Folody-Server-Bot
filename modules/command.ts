@@ -4,17 +4,18 @@ import {
   Message,
   SlashCommandBuilder,
 } from "discord.js";
-import { Argument } from "./usageArgumentTypes";
 
 interface MessageCommandOptions {
   name: string;
   aliases?: string[];
-  category?: string;
-  usage?: Argument[];
   description: string;
-  managerOnly?: boolean;
-  ownerOnly?: boolean;
-  nsfw?: boolean;
+  category?: string;
+  help?: (message: Message<true>) => Promise<any>;
+  validate?: (
+    message: Message<true>,
+    ...args: string[]
+  ) => boolean | Promise<boolean>;
+  checks?: ((message: Message<true>) => boolean | Promise<boolean>)[];
   run: (message: Message<true>, ...args: string[]) => Promise<any>;
   disabled?: boolean;
 }
@@ -25,33 +26,26 @@ export class MessageCommand {
     this.description = options.description;
     this.aliases = options.aliases ?? [];
     this.category = options.category;
-    this.usage = options.usage ?? [];
-    this.nsfw = options.nsfw ?? false;
 
-    this.managerOnly = options.managerOnly ?? false;
-    this.ownerOnly = options.ownerOnly ?? false;
+    this.help = options.help;
+    this.validate = options.validate;
+    this.checks = options.checks ?? [];
 
     this.run = options.run;
 
     this.disabled = options.disabled ?? false;
   }
 
-  public readonly name: string;
-  public readonly description: string;
-  public readonly aliases: string[];
-  public readonly category?: string;
-  public readonly usage: Argument[];
-  public readonly nsfw: boolean;
+  public readonly name;
+  public readonly description;
+  public readonly aliases;
+  public readonly category?;
 
-  public readonly managerOnly: boolean;
-  public readonly ownerOnly: boolean;
-
-  public readonly run: (
-    message: Message<true>,
-    ...args: string[]
-  ) => Promise<any>;
-
-  public readonly disabled: boolean;
+  public readonly help?;
+  public readonly validate?;
+  public readonly checks;
+  public readonly run;
+  public readonly disabled;
 }
 
 interface SlashCommandOptions {
@@ -77,19 +71,15 @@ export class SlashCommand {
     this.disabled = options.disabled ?? false;
   }
 
-  public readonly data: SlashCommandBuilder;
+  public readonly data;
 
-  public readonly managerOnly: boolean;
-  public readonly ownerOnly: boolean;
+  public readonly managerOnly;
+  public readonly ownerOnly;
 
-  public readonly guildsOnly: boolean;
+  public readonly guildsOnly;
 
-  public readonly run: (
-    interaction: ChatInputCommandInteraction
-  ) => Promise<any>;
-  public readonly completion?: (
-    interaction: AutocompleteInteraction
-  ) => Promise<void>;
+  public readonly run;
+  public readonly completion?;
 
-  public readonly disabled: boolean;
+  public readonly disabled;
 }

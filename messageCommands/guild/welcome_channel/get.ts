@@ -1,6 +1,7 @@
 import { channelMention } from "@discordjs/builders";
 import Folody from "Folody";
 import { EmbedBuilder, Message } from "discord.js";
+import { checkManageGuild } from "modules/checks/access";
 import { MessageCommand } from "modules/command";
 
 async function getWelcomeChannelCommand(message: Message<true>) {
@@ -40,5 +41,6 @@ export default new MessageCommand({
   ],
   category: "guild",
   description: "Xem kênh chào mừng tại máy của bạn",
+  checks: [checkManageGuild],
   run: getWelcomeChannelCommand,
 });

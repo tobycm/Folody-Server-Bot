@@ -1,8 +1,8 @@
 import { ActivityType, Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
-  eventName: Events.ClientReady,
+export default new BotEvent({
+  event: Events.ClientReady,
   async run(client) {
     console.log(`Logged in as ${client.user!.tag}!`);
 

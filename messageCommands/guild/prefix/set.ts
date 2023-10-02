@@ -1,8 +1,8 @@
 import Folody from "Folody";
 import { Message, PermissionFlagsBits, inlineCode } from "discord.js";
+import { checkManageGuild } from "modules/checks/access";
 import { MessageCommand } from "modules/command";
 import { BaseExceptions, GuildExceptions } from "modules/exceptions";
-import { Required } from "modules/usageArgumentTypes";
 
 async function setPrefixCommand(message: Message<true>, prefix?: string) {
   if (message.member?.permissions.has(PermissionFlagsBits.ManageGuild))
@@ -19,7 +19,15 @@ export default new MessageCommand({
   name: "set_prefix",
   description: "Set the prefix for the guild",
   category: "guild",
-  usage: [Required("prefix")],
   aliases: ["setprefix", "prefix", "set-prefix"],
+  checks: [checkManageGuild],
+  validate(message, prefix) {
+    if (prefix) {
+      return true;
+    }
+
+    message.reply("Xin cái prefix 🙏");
+    return false;
+  },
   run: setPrefixCommand,
 });

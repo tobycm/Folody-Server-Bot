@@ -1,10 +1,10 @@
 import Folody from "Folody";
 import { Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 import { BaseExceptions, GuildExceptions } from "modules/exceptions";
 
-export default new Event({
-  eventName: Events.InteractionCreate,
+export default new BotEvent({
+  event: Events.InteractionCreate,
   async run(interaction) {
     if (!interaction.isChatInputCommand() && !interaction.isAutocomplete())
       return;
