@@ -1,10 +1,10 @@
 import Folody from "Folody";
 import { AttachmentBuilder, Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 import WelcomeCard from "modules/images/welcome";
 
-export default new Event({
-  eventName: Events.GuildMemberAdd,
+export default new BotEvent({
+  event: Events.GuildMemberAdd,
   async run(member) {
     const folody = member.client as Folody;
 

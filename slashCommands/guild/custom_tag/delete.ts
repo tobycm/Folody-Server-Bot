@@ -1,13 +1,13 @@
 import Folody from "Folody";
+import CustomTags from "database/models/customTags";
 import {
-  GuildMember,
   PermissionFlagsBits,
   SlashCommandBuilder,
   inlineCode,
 } from "discord.js";
+import { checkPermissions } from "modules/checks/access";
+import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
-import { NoPermissions } from "modules/exceptions/guild";
-import CustomTags from "modules/models/customTags";
 
 const data = new SlashCommandBuilder()
   .setName("delete_custom_tag")
@@ -19,15 +19,8 @@ data.addStringOption((option) =>
 
 export default new SlashCommand({
   data,
+  checks: [guildOnly, checkPermissions([PermissionFlagsBits.ManageMessages])],
   async run(interaction) {
-    if (!interaction.inGuild()) return;
-    if (
-      !(interaction.member as GuildMember).permissions.has(
-        PermissionFlagsBits.ManageMessages
-      )
-    )
-      throw new NoPermissions();
-
     const folody = interaction.client as Folody;
 
     const customTags =

@@ -1,8 +1,8 @@
 import { Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
-  eventName: Events.MessageCreate,
+export default new BotEvent({
+  event: Events.MessageCreate,
   async run(message) {
     if (
       message.content.startsWith("ogive") ||

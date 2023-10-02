@@ -1,19 +1,10 @@
 import Folody from "Folody";
-import {
-  Message,
-  PermissionsBitField,
-  TextChannel,
-  channelMention,
-} from "discord.js";
+import { Message, TextChannel, channelMention } from "discord.js";
+import { checkManageGuild } from "modules/checks/access";
 import { MessageCommand } from "modules/command.js";
-import { GuildExceptions } from "modules/exceptions/index.js";
-import { Optional } from "modules/usageArgumentTypes.js";
 
 async function setWelcomeChannelCommand(message: Message<true>) {
   const folody = message.client as Folody;
-
-  if (!message.member?.permissions.has(PermissionsBitField.Flags.ManageGuild))
-    throw new GuildExceptions.NoPermissions();
 
   const channel = message.mentions.channels.first() as TextChannel;
   if (!channel) {
@@ -40,8 +31,6 @@ async function setWelcomeChannelCommand(message: Message<true>) {
     });
   }
 
-  // TODO: check if channelID exists
-
   folody.db.set<string>(`${message.guild.id}.channel.welcome`, channel.id);
   message.reply({
     embeds: [
@@ -65,6 +54,6 @@ export default new MessageCommand({
   ],
   category: "guild",
   description: "Chọn kênh chào mừng cho máy chủ của bạn",
-  usage: [Optional("channel")],
+  checks: [checkManageGuild],
   run: setWelcomeChannelCommand,
 });

@@ -1,16 +1,10 @@
 import Folody from "Folody.js";
-import {
-  Events,
-  ThreadChannel,
-  codeBlock,
-  inlineCode,
-  userMention,
-} from "discord.js";
-import Event from "modules/event.js";
-import { BaseExceptions, GuildExceptions } from "modules/exceptions/index.js";
+import { Events, inlineCode, userMention } from "discord.js";
+import BotEvent from "modules/event.js";
+import { UserError } from "modules/exceptions/base";
 
-export default new Event({
-  eventName: Events.MessageCreate,
+export default new BotEvent({
+  event: Events.MessageCreate,
   async run(message) {
     if (message.author.bot) return;
     if (!message.inGuild()) return;
@@ -49,58 +43,24 @@ export default new Event({
     if (!command) return;
 
     if (command.disabled) {
-      if (!folody.owners.includes(message.author.id)) {
-        if (command.ownerOnly) throw new GuildExceptions.NoPermissions();
-        if (!folody.managers.includes(message.author.id) && command.managerOnly)
-          throw new GuildExceptions.NoPermissions();
-      }
-
       return message.reply("Lệnh này đã bị tắt");
     }
 
-    if (!folody.owners.includes(message.author.id)) {
-      if (command.ownerOnly) throw new GuildExceptions.NoPermissions();
-      if (!folody.managers.includes(message.author.id) && command.managerOnly)
-        throw new GuildExceptions.NoPermissions();
+    for (const check of command.checks) {
+      try {
+        const ok = await check(message);
+        if (!ok) return;
+      } catch (error) {
+        if (error instanceof UserError) return message.reply(error.message);
+      }
     }
-
-    if (!(message.channel instanceof ThreadChannel))
-      if (command.nsfw && !message.channel.nsfw)
-        return message.reply(
-          "Đi qua cái channel nsfw sú sú kia rồi mới dùng lệnh này nhé :>"
-        );
 
     try {
       await command.run(message, ...args);
     } catch (error) {
-      if (error instanceof BaseExceptions.UserInputError) {
-        const commandUsage = command.usage.join(" ");
-        return message.reply({
-          embeds: [
-            {
-              author: {
-                name: "Thiếu tham số",
-                icon_url: folody.user.displayAvatarURL(),
-              },
-              description:
-                codeBlock(
-                  `${prefix}${command.name} ${commandUsage}\n` +
-                    " ".repeat(
-                      `${prefix}${command.name} `.length +
-                        commandUsage.indexOf(error.parameter)
-                    ) +
-                    "^".repeat(error.parameter.length)
-                ) + `Thiếu tham số ${inlineCode(error.parameter)}`,
-              color: folody.branding.embedColor,
-            },
-          ],
-        });
-      }
+      if (error instanceof UserError) return message.reply(error.message);
 
-      if (error instanceof BaseExceptions.UserError)
-        return message.reply(error.message);
-
-      message.reply("Có lỗi xảy ra khi chạy lệnh này :<");
+      message.reply("Có lỗi đã xảy ra khi chạy lệnh này :<");
       folody.reportError(error as Error);
     }
   },

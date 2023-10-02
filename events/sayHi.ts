@@ -1,11 +1,11 @@
 // chào mem xd, ko hỉu thì đọc code đi xd
 
 import { Events } from "discord.js";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
-export default new Event({
+export default new BotEvent({
   disabled: true, // hư quá nên tạm disable v :>
-  eventName: Events.MessageCreate,
+  event: Events.MessageCreate,
   async run(message) {
     if (message.author.bot) return;
 

@@ -1,12 +1,12 @@
 import { AttachmentBuilder, Events } from "discord.js";
 import { downloadOne } from "modules/TikTokDownloader";
-import Event from "modules/event";
+import BotEvent from "modules/event";
 
 const tiktokRegex =
   /\bhttps?:\/\/(?:m|www|v.)\.tiktok\.com\/\S*?\b(?:(?:(?:usr|v|embed|user|video)\/|\?shareId=|\&item_id=)(\d+)|(?=\w{7})(\w*?[A-Z\d]\w*)(?=\s|\/$))\b/;
 
-export default new Event({
-  eventName: Events.MessageUpdate,
+export default new BotEvent({
+  event: Events.MessageUpdate,
   async run(message) {
     if (!message.embeds[0]) return;
 

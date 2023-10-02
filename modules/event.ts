@@ -1,22 +1,22 @@
 import { ClientEvents } from "discord.js";
 
-interface EventOptions<E extends keyof ClientEvents> {
+interface BotEventOptions<Event extends keyof ClientEvents> {
   disabled?: boolean;
-  eventName: E;
+  event: Event;
   once?: boolean;
-  run: (...args: ClientEvents[E]) => Promise<any>;
+  run: (...args: ClientEvents[Event]) => Promise<any>;
 }
 
-export default class Event<E extends keyof ClientEvents> {
-  constructor(options: EventOptions<E>) {
+export default class BotEvent<Event extends keyof ClientEvents> {
+  constructor(options: BotEventOptions<Event>) {
     this.disabled = options.disabled ?? false;
-    this.eventName = options.eventName;
+    this.event = options.event;
     this.once = options.once;
     this.run = options.run;
   }
 
   disabled;
-  eventName;
+  event;
   once?;
   run;
 }

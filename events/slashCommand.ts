@@ -1,10 +1,10 @@
 import Folody from "Folody";
 import { Events } from "discord.js";
-import Event from "modules/event";
-import { BaseExceptions, GuildExceptions } from "modules/exceptions";
+import BotEvent from "modules/event";
+import { UserError } from "modules/exceptions/base";
 
-export default new Event({
-  eventName: Events.InteractionCreate,
+export default new BotEvent({
+  event: Events.InteractionCreate,
   async run(interaction) {
     if (!interaction.isChatInputCommand() && !interaction.isAutocomplete())
       return;
@@ -25,28 +25,25 @@ export default new Event({
           },
         ]);
 
-      if (!folody.owners.includes(interaction.user.id)) {
-        if (command.ownerOnly) throw new GuildExceptions.NoPermissions();
-        if (
-          !folody.managers.includes(interaction.user.id) &&
-          command.managerOnly
-        )
-          throw new GuildExceptions.NoPermissions();
-      }
-
       return interaction.reply("Lệnh này đã bị tắt");
     }
 
     if (interaction.isAutocomplete()) {
       if (!command.completion) return;
 
-      if (!folody.owners.includes(interaction.user.id)) {
-        if (command.ownerOnly) return;
-        if (
-          !folody.managers.includes(interaction.user.id) &&
-          command.managerOnly
-        )
-          return;
+      for (const check of command.checks) {
+        try {
+          const ok = await check(interaction);
+          if (!ok) return;
+        } catch (error) {
+          if (error instanceof UserError)
+            return interaction.respond([
+              {
+                name: error.message,
+                value: error.message,
+              },
+            ]);
+        }
       }
 
       try {
@@ -57,20 +54,20 @@ export default new Event({
     }
 
     if (interaction.isChatInputCommand()) {
-      if (!folody.owners.includes(interaction.user.id)) {
-        if (command.ownerOnly) throw new GuildExceptions.NoPermissions();
-        if (
-          !folody.managers.includes(interaction.user.id) &&
-          command.managerOnly
-        )
-          throw new GuildExceptions.NoPermissions();
+      for (const check of command.checks) {
+        try {
+          const ok = await check(interaction);
+          if (!ok) return;
+        } catch (error) {
+          if (error instanceof UserError)
+            return interaction.reply(error.message);
+        }
       }
 
       try {
         await command.run(interaction);
       } catch (error) {
-        if (error instanceof BaseExceptions.UserError)
-          return interaction.reply(error.message);
+        if (error instanceof UserError) return interaction.reply(error.message);
 
         if (!interaction.replied)
           interaction.reply("Có lỗi xảy ra khi chạy lệnh này :<");

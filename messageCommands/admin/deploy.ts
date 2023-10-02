@@ -1,5 +1,6 @@
 import Folody from "Folody";
 import { Message, SlashCommandBuilder } from "discord.js";
+import { checkOwner } from "modules/checks/access";
 import { MessageCommand } from "modules/command";
 
 // deploy slash commands
@@ -28,6 +29,6 @@ export default new MessageCommand({
   name: "deploy",
   category: "admin",
   description: "Deploy slash commands",
-  ownerOnly: true,
+  checks: [checkOwner],
   run: deployCommand,
 });
