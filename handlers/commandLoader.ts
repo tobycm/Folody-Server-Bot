@@ -11,6 +11,8 @@ export default async function loadCommands(folody: Folody) {
         loadCommand(newRoot, item)
       );
     }
+
+    if (!item.endsWith(".ts")) return;
     const command = (await import(`.${root}${item}`)).default as
       | MessageCommand
       | SlashCommand;

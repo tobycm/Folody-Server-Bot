@@ -2,7 +2,6 @@ import { EmbedBuilder } from "@discordjs/builders";
 import { inlineCode, Message } from "discord.js";
 import Folody from "Folody";
 import { MessageCommand } from "modules/command";
-import { Optional } from "modules/usageArgumentTypes";
 
 async function helpCommand(message: Message, commandName?: string) {
   if (!message.guild) return;
@@ -96,6 +95,5 @@ export default new MessageCommand({
   name: "help",
   category: "misc",
   description: "Shows help",
-  usage: [Optional("command")],
   run: helpCommand,
 });

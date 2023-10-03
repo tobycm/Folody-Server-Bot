@@ -1,7 +1,7 @@
 import { codeBlock, Message } from "discord.js";
 import Folody from "Folody";
+import { checkOwner } from "modules/checks/access";
 import { MessageCommand } from "modules/command";
-import { Required } from "modules/usageArgumentTypes";
 import { inspect } from "util";
 
 async function evalCommand(message: Message<true>) {
@@ -38,7 +38,13 @@ export default new MessageCommand({
   name: "eval",
   category: "misc",
   description: "Eval code",
-  usage: [Required("code")],
-  ownerOnly: true,
+  validate(message, ...code) {
+    if (code.join(" ").trim() === "") {
+      message.reply("Code đâu bủh");
+      return false;
+    }
+    return true;
+  },
+  checks: [checkOwner],
   run: evalCommand,
 });
