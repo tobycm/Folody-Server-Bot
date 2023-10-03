@@ -1,6 +1,11 @@
 import Folody from "Folody";
-import { Message, TextChannel, channelMention } from "discord.js";
-import { checkManageGuild } from "modules/checks/access";
+import {
+  Message,
+  PermissionFlagsBits,
+  TextChannel,
+  channelMention,
+} from "discord.js";
+import { checkPermissions } from "modules/checks/access";
 import { MessageCommand } from "modules/command.js";
 
 async function setWelcomeChannelCommand(message: Message<true>) {
@@ -54,6 +59,6 @@ export default new MessageCommand({
   ],
   category: "guild",
   description: "Chọn kênh chào mừng cho máy chủ của bạn",
-  checks: [checkManageGuild],
+  checks: [checkPermissions([PermissionFlagsBits.ManageGuild])],
   run: setWelcomeChannelCommand,
 });

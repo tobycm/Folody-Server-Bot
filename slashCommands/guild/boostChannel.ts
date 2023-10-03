@@ -2,8 +2,10 @@ import Folody from "Folody";
 import {
   ChannelType,
   ChatInputCommandInteraction,
+  PermissionFlagsBits,
   SlashCommandBuilder,
 } from "discord.js";
+import { checkPermissions } from "modules/checks/access";
 import { SlashCommand } from "modules/command";
 
 const data = new SlashCommandBuilder()
@@ -26,6 +28,7 @@ data.addChannelOption((option) =>
 
 export default new SlashCommand({
   data,
+  checks: [checkPermissions([PermissionFlagsBits.ManageGuild])],
   async run(interaction: ChatInputCommandInteraction) {
     const channel = interaction.options.getChannel("channel", false);
     if (!channel) {
