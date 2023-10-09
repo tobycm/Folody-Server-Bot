@@ -10,9 +10,7 @@ async function deployCommand(message: Message) {
   const guildID = message.content.split(" ")[1];
 
   const slashCommands: SlashCommandBuilder[] = [];
-  folody.slashCommands.forEach((slashCommand) =>
-    slashCommands.push(slashCommand.data)
-  );
+  folody.slashCommands.forEach((slashCommand) => slashCommands.push(slashCommand.data));
 
   if (guildID) {
     try {

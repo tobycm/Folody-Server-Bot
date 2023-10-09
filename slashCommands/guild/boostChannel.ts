@@ -1,16 +1,9 @@
 import Folody from "Folody";
-import {
-  ChannelType,
-  ChatInputCommandInteraction,
-  PermissionFlagsBits,
-  SlashCommandBuilder,
-} from "discord.js";
+import { ChannelType, ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { checkPermissions } from "modules/checks/access";
 import { SlashCommand } from "modules/command";
 
-const data = new SlashCommandBuilder()
-  .setName("boost_channel")
-  .setDescription("Set boost channel hoặc xem boost channel đã được cài đặt");
+const data = new SlashCommandBuilder().setName("boost_channel").setDescription("Set boost channel hoặc xem boost channel đã được cài đặt");
 
 data.addChannelOption((option) =>
   option
@@ -22,8 +15,8 @@ data.addChannelOption((option) =>
       ChannelType.GuildAnnouncement,
       ChannelType.PublicThread,
       ChannelType.PrivateThread,
-      ChannelType.GuildText
-    )
+      ChannelType.GuildText,
+    ),
 );
 
 export default new SlashCommand({
@@ -32,18 +25,12 @@ export default new SlashCommand({
   async run(interaction: ChatInputCommandInteraction) {
     const channel = interaction.options.getChannel("channel", false);
     if (!channel) {
-      const boostChannel = (interaction.client as Folody).db.get<string>(
-        `guild.${interaction.guildId}.channel.boost`
-      );
-      if (!boostChannel)
-        return interaction.reply("Chưa có boost channel nào được cài đặt!");
+      const boostChannel = (interaction.client as Folody).db.get<string>(`guild.${interaction.guildId}.channel.boost`);
+      if (!boostChannel) return interaction.reply("Chưa có boost channel nào được cài đặt!");
       return interaction.reply(`Boost channel hiện tại là <#${boostChannel}>`);
     }
 
-    (interaction.client as Folody).db.set(
-      `guild.${interaction.guildId}.channel.boost`,
-      channel.id
-    );
+    (interaction.client as Folody).db.set(`guild.${interaction.guildId}.channel.boost`, channel.id);
     return interaction.reply(`Đã set boost channel thành <#${channel.id}>`);
   },
 });

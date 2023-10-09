@@ -8,19 +8,14 @@ export default new BotEvent({
   async run(member) {
     const folody = member.client as Folody;
 
-    const welcomeChannelId = await folody.db.get<string>(
-      `${member.guild.id}.channel.welcome`
-    );
+    const welcomeChannelId = await folody.db.get<string>(`${member.guild.id}.channel.welcome`);
 
     if (!welcomeChannelId) return;
 
     const welcomeChannel = member.guild.channels.cache.get(welcomeChannelId);
     if (!welcomeChannel?.isTextBased()) return;
 
-    if (member.user.bot)
-      return welcomeChannel.send(
-        `Có con npc ${member.user} vào si vi kìa men :scream: :scream: :scream:`
-      );
+    if (member.user.bot) return welcomeChannel.send(`Có con npc ${member.user} vào si vi kìa men :scream: :scream: :scream:`);
 
     welcomeChannel.send({
       content:

@@ -1,12 +1,6 @@
 import { readFileSync } from "fs";
 
-import {
-  Client,
-  ClientOptions,
-  GatewayIntentBits,
-  Snowflake,
-  codeBlock,
-} from "discord.js";
+import { Client, ClientOptions, GatewayIntentBits, Snowflake, codeBlock } from "discord.js";
 
 import { QuickDB } from "quick.db";
 

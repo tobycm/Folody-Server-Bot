@@ -17,10 +17,8 @@ const pictureCache = new Map<string, Image>();
 
 export async function getPicture(): Promise<Image> {
   while (true) {
-    const theChosenPicture =
-      pictures[Math.floor(Math.random() * pictures.length)];
-    if (pictureCache.has(theChosenPicture))
-      return pictureCache.get(theChosenPicture)!;
+    const theChosenPicture = pictures[Math.floor(Math.random() * pictures.length)];
+    if (pictureCache.has(theChosenPicture)) return pictureCache.get(theChosenPicture)!;
     try {
       const picture = await loadImage(theChosenPicture);
       pictureCache.set(theChosenPicture, picture);
@@ -32,16 +30,8 @@ export async function getPicture(): Promise<Image> {
   }
 }
 
-export default async function WelcomeCard(
-  member: GuildMember
-): Promise<Buffer> {
-  const avatar = await loadImage(
-    member.user.displayAvatarURL({
-      size: 4096,
-      extension: "png",
-      forceStatic: true,
-    }) ?? member.user.defaultAvatarURL
-  );
+export default async function WelcomeCard(member: GuildMember): Promise<Buffer> {
+  const avatar = await loadImage(member.user.displayAvatarURL({ size: 4096, extension: "png", forceStatic: true }) ?? member.user.defaultAvatarURL);
 
   return new Canvas(1024, 450)
     .printImage(await getPicture(), 0, 0, 1024, 450)

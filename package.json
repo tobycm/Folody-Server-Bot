@@ -1,27 +1,27 @@
 {
-    "name": "folody-server-bot",
-    "module": "Folody.ts",
-    "type": "module",
-    "version": "0.11.1",
-    "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.55.0",
-        "@typescript-eslint/parser": "^5.55.0",
-        "eslint": "^8.36.0",
-        "eslint-plugin-prettier": "^5.0.0",
-        "tsx": "^3.12.6",
-        "typescript": "^5.0.2"
-    },
-    "dependencies": {
-        "better-sqlite3": "^8.5.0",
-        "canvas": "^2.11.2",
-        "canvas-constructor": "^7.0.1",
-        "discord.js": "^14.12.1",
-        "quick.db": "^9.1.7",
-        "weird-to-normal-chars": "^1.8.3"
-    },
-    "scripts": {
-        "start": "tsx Folody",
-        "dev": "tsx watch Folody",
-        "init": "npm i && mkdir -p data && cp -n config.example.ts config.ts"
-    }
+  "name": "folody-server-bot",
+  "module": "Folody.ts",
+  "type": "module",
+  "version": "0.11.1",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.5.0",
+    "canvas": "^2.11.2",
+    "canvas-constructor": "^7.0.1",
+    "discord.js": "^14.12.1",
+    "quick.db": "^9.1.7",
+    "weird-to-normal-chars": "^1.8.3"
+  },
+  "scripts": {
+    "start": "tsx Folody",
+    "dev": "tsx watch Folody",
+    "init": "npm i && mkdir -p data && cp -n config.example.ts config.ts"
+  }
 }

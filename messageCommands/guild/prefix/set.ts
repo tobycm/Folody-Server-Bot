@@ -10,9 +10,7 @@ export default new MessageCommand({
   aliases: ["setprefix", "prefix", "set-prefix"],
   checks: [checkPermissions([PermissionFlagsBits.ManageGuild])],
   validate(message, prefix) {
-    if (prefix) {
-      return true;
-    }
+    if (prefix) return true;
 
     message.reply("Xin cái prefix 🙏");
     return false;

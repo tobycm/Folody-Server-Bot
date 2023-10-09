@@ -1,9 +1,4 @@
-import {
-  AutocompleteInteraction,
-  ChatInputCommandInteraction,
-  Message,
-  SlashCommandBuilder,
-} from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
 
 interface MessageCommandOptions {
   name: string;
@@ -11,10 +6,7 @@ interface MessageCommandOptions {
   description: string;
   category?: string;
   help?: (message: Message<true>) => Promise<any>;
-  validate?: (
-    message: Message<true>,
-    ...args: string[]
-  ) => boolean | Promise<boolean>;
+  validate?: (message: Message<true>, ...args: string[]) => boolean | Promise<boolean>;
   checks?: ((message: Message<true>) => boolean | Promise<boolean>)[];
   run: (message: Message<true>, ...args: string[]) => Promise<any>;
   disabled?: boolean;
@@ -50,9 +42,7 @@ export class MessageCommand {
 
 interface SlashCommandOptions {
   data: SlashCommandBuilder;
-  checks?: ((
-    interaction: ChatInputCommandInteraction | AutocompleteInteraction
-  ) => boolean | Promise<boolean>)[];
+  checks?: ((interaction: ChatInputCommandInteraction | AutocompleteInteraction) => boolean | Promise<boolean>)[];
   run: (interaction: ChatInputCommandInteraction) => Promise<any>;
   completion?: (interaction: AutocompleteInteraction) => Promise<any>;
   disabled?: boolean;

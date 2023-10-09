@@ -11,8 +11,7 @@ export default new BotEvent({
 
     const folody = message.client as Folody;
 
-    const customTags =
-      (await folody.db.get<CustomTags>(`${message.guild.id}.customTags`)) || {};
+    const customTags = (await folody.db.get<CustomTags>(`${message.guild.id}.customTags`)) || {};
 
     const customTag = customTags[message.content.toLowerCase()];
     if (!customTag) return;

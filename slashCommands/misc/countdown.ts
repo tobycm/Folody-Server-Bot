@@ -1,10 +1,4 @@
-import {
-  AutocompleteInteraction,
-  ChatInputCommandInteraction,
-  SlashCommandBuilder,
-  formatEmoji,
-  userMention,
-} from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder, formatEmoji, userMention } from "discord.js";
 import { SlashCommand } from "modules/command";
 import { secondsToTime } from "modules/utils";
 
@@ -30,30 +24,12 @@ function timeNumberToEmoji(time: string) {
   return emojiString;
 }
 
-const data = new SlashCommandBuilder()
-  .setName("countdown")
-  .setDescription("Starts a countdown");
+const data = new SlashCommandBuilder().setName("countdown").setDescription("Starts a countdown");
 
 data
-  .addIntegerOption((option) =>
-    option
-      .setName("time")
-      .setDescription("Time in seconds")
-      .setRequired(true)
-      .setAutocomplete(true)
-  )
-  .addStringOption((option) =>
-    option
-      .setName("message")
-      .setDescription("Message to send when countdown ends")
-      .setRequired(true)
-  )
-  .addUserOption((option) =>
-    option
-      .setName("user")
-      .setDescription("User to ping when countdown ends")
-      .setRequired(false)
-  );
+  .addIntegerOption((option) => option.setName("time").setDescription("Time in seconds").setRequired(true).setAutocomplete(true))
+  .addStringOption((option) => option.setName("message").setDescription("Message to send when countdown ends").setRequired(true))
+  .addUserOption((option) => option.setName("user").setDescription("User to ping when countdown ends").setRequired(false));
 
 export default new SlashCommand({
   data,
@@ -62,40 +38,26 @@ export default new SlashCommand({
     const message = interaction.options.getString("message", true);
     const user = interaction.options.getUser("user");
 
-    if (time < 1)
-      return interaction.reply("Đếm gì ít nhất cũng phải 1 giây chứ?");
+    if (time < 1) return interaction.reply("Đếm gì ít nhất cũng phải 1 giây chứ?");
 
-    interaction.reply(
-      timeNumberToEmoji(secondsToTime(time, true, true)) +
-        formatEmoji("1100977419147542638", true)
-    );
+    interaction.reply(timeNumberToEmoji(secondsToTime(time, true, true)) + formatEmoji("1100977419147542638", true));
     time--;
 
     const counter = setInterval(async () => {
       if (time === 0) {
         clearInterval(counter);
         interaction.editReply("Đếm xong rồi nè!");
-        return interaction.followUp(
-          `${user ? `${userMention(user.id)} ` : ""}${message}`
-        );
+        return interaction.followUp(`${user ? `${userMention(user.id)} ` : ""}${message}`);
       }
 
-      interaction.editReply(
-        timeNumberToEmoji(secondsToTime(time, true, true)) +
-          formatEmoji("1100977419147542638", true)
-      );
+      interaction.editReply(timeNumberToEmoji(secondsToTime(time, true, true)) + formatEmoji("1100977419147542638", true));
       time--;
     }, 1000);
   },
   async completion(interaction: AutocompleteInteraction) {
     const time = interaction.options.getInteger("time", true);
     try {
-      return interaction.respond([
-        {
-          name: secondsToTime(time, true, true),
-          value: time,
-        },
-      ]);
+      return interaction.respond([{ name: secondsToTime(time, true, true), value: time }]);
     } catch {}
   },
 });

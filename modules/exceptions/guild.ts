@@ -32,16 +32,12 @@ export class TargetNotFound extends UserError {
 
 export class AuthorRoleIsLower extends UserError {
   constructor() {
-    super(
-      "Bạn không thể sử dụng lệnh lên người này vì họ có quyền cao hơn hoặc bằng bạn!"
-    );
+    super("Bạn không thể sử dụng lệnh lên người này vì họ có quyền cao hơn hoặc bằng bạn!");
   }
 }
 
 export class BotRoleIsLower extends UserError {
   constructor() {
-    super(
-      "Tôi không thể sử dụng lệnh lên người này vì họ có quyền cao hơn hoặc bằng tôi!"
-    );
+    super("Tôi không thể sử dụng lệnh lên người này vì họ có quyền cao hơn hoặc bằng tôi!");
   }
 }

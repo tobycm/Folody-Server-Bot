@@ -18,7 +18,7 @@ export default new BotEvent({
         await folodyCommunity.setBanner(banner);
         (client as Folody).branding.banners.push(banner);
       },
-      1000 * 60 * 60 * 24 // 24 hours
+      1000 * 60 * 60 * 24, // 24 hours
     );
   },
 });

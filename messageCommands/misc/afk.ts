@@ -7,38 +7,13 @@ async function afkCommand(message: Message, ...reason: string[]) {
 
   if (await folody.db.get(`${message.author.id}.afk`)) {
     folody.db.delete(`${message.author.id}.afk`);
-    return message.reply({
-      embeds: [
-        {
-          description: "Đã xóa AFK của bạn",
-          color: folody.branding.embedColor,
-        },
-      ],
-    });
+    return message.reply({ embeds: [{ description: "Đã xóa AFK của bạn", color: folody.branding.embedColor }] });
   }
 
-  if (!reason)
-    return message.reply({
-      embeds: [
-        {
-          description: "Bạn phải nhập lí do AFK",
-          color: folody.branding.embedColor,
-        },
-      ],
-    });
+  if (!reason) return message.reply({ embeds: [{ description: "Bạn phải nhập lí do AFK", color: folody.branding.embedColor }] });
 
-  folody.db.set(
-    `${message.author.id}.afk`,
-    reason.join(" ") || "No reason provided"
-  );
-  return message.reply({
-    embeds: [
-      {
-        description: "Đã set AFK của bạn",
-        color: folody.branding.embedColor,
-      },
-    ],
-  });
+  folody.db.set(`${message.author.id}.afk`, reason.join(" ") || "No reason provided");
+  return message.reply({ embeds: [{ description: "Đã set AFK của bạn", color: folody.branding.embedColor }] });
 }
 
 export default new MessageCommand({

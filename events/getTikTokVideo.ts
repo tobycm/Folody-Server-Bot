@@ -16,10 +16,6 @@ export default new BotEvent({
 
     if (!url.match(tiktokRegex)) return;
 
-    message.channel.send({
-      files: [
-        new AttachmentBuilder(await downloadOne(url), { name: "tiktok.mp4" }),
-      ],
-    });
+    message.channel.send({ files: [new AttachmentBuilder(await downloadOne(url), { name: "tiktok.mp4" })] });
   },
 });
