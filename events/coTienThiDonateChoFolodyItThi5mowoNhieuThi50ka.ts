@@ -1,26 +1,27 @@
 import { Events } from "discord.js";
 import BotEvent from "modules/event";
 
+/**
+ * @param {Discord.Message} oldMessage
+ * @param {Discord.Message} newMessage
+ */
 export default new BotEvent({
-  event: Events.MessageCreate,
-  async run(message) {
-    if (
-      message.content.startsWith("ogive") ||
-      message.content.startsWith("owogive")
-    ) {
-      
-      if (
-        !message.content.split(" ")[1] ||
-        isNaN(Number(message.content.split(" ")[2])) ||
-        !message.content.split(" ")[2]
-      )
-        return;
-      else if (message.content.split(" ")[1] === "<@926643835419910184>")
-        return message.reply(
+  event: Events.MessageUpdate,
+  async run(oldmessage, newmessage) {
+    if (newmessage.author.id === '408785106942164992') {
+      async function sliceNumber(num) {
+        const pattern = /\B(?=(\d{3})+(?!\d))/g
+        return num.toString().replace(pattern, ',')
+      }
+
+      const msg = newmessage.content.split(' ')
+      if (!newmessage.content) return
+      else if (newmessage.content.startsWith('**:credit_card:'))
+        return newmessage.channel.send(
           `> <a:nhoamnhoam:1145729266517016606> cảm ơn bạn ${
-            message.member
+            (msg[2]).replace('**', '')
           } đã donate cho bọn mình **_${
-            message.content.split(" ")[2]
+            sliceNumber(((msg[4]).replace('**', '')))
           }_ cowoncy** nha!`
         );
     }
