@@ -8,6 +8,7 @@ export default new BotEvent({
       message.content.startsWith("ogive") ||
       message.content.startsWith("owogive")
     ) {
+      
       if (
         !message.content.split(" ")[1] ||
         isNaN(Number(message.content.split(" ")[2])) ||
