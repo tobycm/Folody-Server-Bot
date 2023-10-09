@@ -16,7 +16,7 @@ export default new BotEvent({
 
       const msg = newmessage.content.split(' ')
       if (!newmessage.content) return
-      else if (newmessage.content.startsWith('**:credit_card:'))
+      else if (msg[7] === '**<@926643835419910184>**!')
         return newmessage.channel.send(
           `> <a:nhoamnhoam:1145729266517016606> cảm ơn bạn ${
             (msg[2]).replace('**', '')
