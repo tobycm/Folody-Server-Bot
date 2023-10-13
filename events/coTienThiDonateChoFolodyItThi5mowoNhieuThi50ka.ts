@@ -16,7 +16,7 @@ export default new BotEvent({
     const msg = newMessage.content.split(" ");
 
     // akaix
-    if (msg[7] !== userMention("926643835419910184")) return;
+    if (msg[7] !== `${userMention("926643835419910184")}!`) return;
 
     return newMessage.channel.send(`> <a:nhoamnhoam:1145729266517016606> cảm ơn bạn ${msg[2]} đã donate cho bọn mình **_${msg[4]}_ cowoncy** nha!`);
   },
