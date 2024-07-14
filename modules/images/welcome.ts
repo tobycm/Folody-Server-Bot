@@ -8,14 +8,13 @@ registerFont("./assets/DejaVuSansCondensed-Bold.ttf", {
   family: "Discordx",
 });
 
-const pictures = [
-  "https://cdn.discordapp.com/attachments/955639718815621151/1136098424312320041/1690937289044.jpg", // thx cauvang 870825189586378843
-  "https://media.discordapp.net/attachments/955639718815621151/1142993577006338188/20230820_182718.jpg", // background cháy như vsus
-];
+const pictures: string[] = [];
 
 const pictureCache = new Map<string, Image>();
 
 export async function getPicture(): Promise<Image> {
+  if (pictures.length === 0) throw new Error("No pictures available");
+
   while (true) {
     const theChosenPicture = pictures[Math.floor(Math.random() * pictures.length)];
     if (pictureCache.has(theChosenPicture)) return pictureCache.get(theChosenPicture)!;
@@ -25,6 +24,7 @@ export async function getPicture(): Promise<Image> {
       return picture;
     } catch (e) {
       console.error("Error loading picture", theChosenPicture);
+      pictures.splice(pictures.indexOf(theChosenPicture), 1);
       continue;
     }
   }
@@ -33,8 +33,16 @@ export async function getPicture(): Promise<Image> {
 export default async function WelcomeCard(member: GuildMember): Promise<Buffer> {
   const avatar = await loadImage(member.user.displayAvatarURL({ size: 4096, extension: "png", forceStatic: true }) ?? member.user.defaultAvatarURL);
 
-  return new Canvas(1024, 450)
-    .printImage(await getPicture(), 0, 0, 1024, 450)
+  const canvas = new Canvas(1024, 450);
+
+  try {
+    canvas.printImage(await getPicture(), 0, 0, 1024, 450);
+  } catch (e) {
+    // can't load picture
+    canvas.setColor("#1E1E1E").printRectangle(0, 0, 1024, 450);
+  }
+
+  canvas
     .setColor("#FFFFFF")
     .printCircle(512, 155, 120)
     .printCircularImage(avatar, 512, 155, 115)
@@ -48,6 +56,7 @@ export default async function WelcomeCard(member: GuildMember): Promise<Buffer> 
     .setTextAlign("center")
     .setColor("#FFFFFF")
     .setTextFont("30px Discord")
-    .printText(`To ${member.guild.name}`, 512, 430)
-    .toBufferAsync();
+    .printText(`To ${member.guild.name}`, 512, 430);
+
+  return canvas.toBufferAsync();
 }
