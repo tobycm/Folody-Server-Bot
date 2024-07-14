@@ -8,7 +8,9 @@ registerFont("./assets/DejaVuSansCondensed-Bold.ttf", {
   family: "Discordx",
 });
 
-const pictures: string[] = [];
+const pictures: string[] = [
+  "https://i.ibb.co/DYcx3nV/catppuccin1080.png", // very chill cafe, from fosly
+];
 
 const pictureCache = new Map<string, Image>();
 
