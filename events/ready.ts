@@ -6,6 +6,6 @@ export default new BotEvent({
   async run(client) {
     console.log(`Logged in as ${client.user!.tag}!`);
 
-    client.user!.setActivity("with Toby", { type: ActivityType.Playing });
+    client.user!.setActivity("happy new year 2025 🎉", { type: ActivityType.Playing });
   },
 });

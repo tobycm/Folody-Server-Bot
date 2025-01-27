@@ -18,6 +18,6 @@ export default new MessageCommand({
   async run(message: Message<true>, prefix: string) {
     (message.client as Folody).setPrefix(message.guild.id, prefix);
 
-    return message.channel.send(`Prefix set to ${inlineCode(prefix)}`);
+    return message.channel.send(`Prefix đã được đặt thành ${inlineCode(prefix)}`);
   },
 });

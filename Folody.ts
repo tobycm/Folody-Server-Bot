@@ -20,7 +20,6 @@ interface BrandingOptions {
     error: string;
     loading: string;
   };
-  banners: string[];
 }
 
 interface Options extends ClientOptions {

@@ -12,7 +12,7 @@ async function afkCommand(message: Message, ...reason: string[]) {
 
   if (!reason) return message.reply({ embeds: [{ description: "Bạn phải nhập lí do AFK", color: folody.branding.embedColor }] });
 
-  folody.db.set(`${message.author.id}.afk`, reason.join(" ") || "No reason provided");
+  folody.db.set(`${message.author.id}.afk`, reason.join(" ") || "Không có lí do");
   return message.reply({ embeds: [{ description: "Đã set AFK của bạn", color: folody.branding.embedColor }] });
 }
 

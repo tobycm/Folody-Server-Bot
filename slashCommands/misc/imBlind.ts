@@ -13,6 +13,6 @@ export default new SlashCommand({
     }
 
     await folody.db.set<boolean>(`${interaction.user.id}.imBlind`, true);
-    interaction.reply("Nghỉ mắt mỗi 20 phút nhé :), nhìn ra ngoài xa 20m trong 20 giây nhe");
+    interaction.reply("Nghỉ mắt mỗi 20 phút nhé :), nhìn ra ngoài xa 20m trong 20 giây nhé!");
   },
 });

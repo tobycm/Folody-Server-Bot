@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { MessageCommand } from "modules/command.js";
 
 async function pingCommand(message: Message) {
-  const replyMessage = await message.reply("Measuring ping...");
+  const replyMessage = await message.reply("Pinging...");
   replyMessage.edit(`Pong! \`${replyMessage.createdTimestamp - message.createdTimestamp}\`ms`);
 }
 

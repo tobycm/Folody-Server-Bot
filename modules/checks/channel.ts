@@ -8,7 +8,7 @@ export function checkNSFW(message: Message<true> | ChatInputCommandInteraction |
 
   if (!nsfw) {
     if (message instanceof AutocompleteInteraction) message.respond([]);
-    else message.reply("Đi qua cái channel nsfw sú sú kia rồi mới dùng lệnh này nhé :>");
+    else message.reply("Đi qua cái channel <#1207705417615151184> sú sú kia rồi mới dùng lệnh này nhé :>");
   }
 
   return nsfw;
