@@ -3,22 +3,24 @@
 import { Events } from "discord.js";
 import BotEvent from "modules/event";
 
+const lastMessageCache = new Map<string, number>();
+
 export default new BotEvent({
-  disabled: true, // hư quá nên tạm disable v :>
+  // disabled: true, // hư quá nên tạm disable v :>
   event: Events.MessageCreate,
   async run(message) {
     if (message.author.bot) return;
 
-    if (message.channel.messages.cache.size < 500) message.channel.messages.fetch({ limit: 500, cache: true });
+    if (!lastMessageCache.has(message.author.id)) return lastMessageCache.set(message.author.id, message.createdTimestamp);
 
-    const authorMessages = message.channel.messages.cache.filter((m) => m.author === message.author);
+    const lastMessageTimestamp = lastMessageCache.get(message.author.id)!;
 
-    if (authorMessages.size === 0 || authorMessages.size === 1) return message.channel.send(`Wassup ${message.author}`);
+    lastMessageCache.set(message.author.id, message.createdTimestamp);
 
-    const lastMessage = authorMessages.values().next().value;
+    if (message.createdTimestamp - lastMessageTimestamp < 1000 * 60 * 60 * 6) return; // 6h
 
-    if (!(message.createdTimestamp - lastMessage.createdTimestamp < 1000 * 60 * 60 * 6))
-      // 6 hours
-      message.channel.send(`Wassup ${message.author}`);
+    message.channel.send(`Chào mừng bạn đã quay lại ${message.author} `);
   },
 });
+
+setInterval(() => lastMessageCache.clear(), 1000 * 60 * 60 * 24 * 7 * 2); // 2 tuần

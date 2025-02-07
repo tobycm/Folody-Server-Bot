@@ -54,7 +54,6 @@ export default class Folody extends Client {
         error: "<a:alert:1081902415701356605>",
         loading: "<a:loading:1027196377245155348>",
       },
-      banners: [],
     };
 
     loadEvents(this);
@@ -88,7 +87,7 @@ export default class Folody extends Client {
   public async reportError(error: Error): Promise<void> {
     console.log(error); // log ổn hơn
     const channel = await this.channels.fetch(config.bot.channels.error);
-    if (!channel?.isTextBased()) return;
+    if (!channel?.isSendable()) return;
 
     channel.send({
       embeds: [
