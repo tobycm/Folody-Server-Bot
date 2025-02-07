@@ -23,5 +23,8 @@
     "start": "tsx Folody",
     "dev": "tsx watch Folody",
     "init": "npm i && mkdir -p data && cp -n config.example.ts config.ts"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["better-sqlite3", "canvas", "esbuild"]
   }
 }
