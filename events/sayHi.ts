@@ -19,7 +19,9 @@ export default new BotEvent({
 
     if (message.createdTimestamp - lastMessageTimestamp < 1000 * 60 * 60 * 6) return; // 6h
 
-    message.channel.send(`Chào mừng bạn đã quay lại ${message.author} `);
+    const m = await message.channel.send(`Chào mừng bạn đã quay lại ${message.author} `);
+
+    setTimeout(() => m.delete(), 1000 * 30); // 30s
   },
 });
 
