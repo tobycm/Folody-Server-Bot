@@ -23,13 +23,13 @@ async function helpCommand(message: Message, commandName?: string) {
         {
           name: "Category",
           value: command.category ?? "None",
-          inline: true,
-        },
+          inline: true
+        }
       ],
       footer: {
         text: `Requested by ${message.author.tag}`,
-        icon_url: message.author.displayAvatarURL(),
-      },
+        icon_url: message.author.displayAvatarURL()
+      }
     });
 
     if (command.aliases.length > 0)
@@ -47,8 +47,8 @@ async function helpCommand(message: Message, commandName?: string) {
           (await folody.getPrefix(message.guild.id)) +
             command.name +
             commandUsage
-        ),
-      },
+        )
+      }
     ]);
 
     return message.reply({ embeds: [embed] });
@@ -63,37 +63,36 @@ async function helpCommand(message: Message, commandName?: string) {
       categories.set(category, [command]);
       continue;
     }
-    if (categories.get(category)?.find((c) => c.name === command.name))
-      continue;
+    if (categories.get(category)?.find((c) => c.name === command.name)) continue;
     categories.get(category)!.push(command);
   }
 
   const embed = new EmbedBuilder()
     .setAuthor({
       name: "Help",
-      iconURL: folody.user!.displayAvatarURL(),
+      iconURL: folody.user!.displayAvatarURL()
     })
     .setTitle("Help")
     .setColor(folody.branding.embedColor)
     .setFooter({
       text: `Requested by ${message.author.tag}`,
-      iconURL: message.author.displayAvatarURL(),
+      iconURL: message.author.displayAvatarURL()
     })
     .setTimestamp();
 
   for (const [category, commands] of categories) {
     embed.addFields({
       name: category,
-      value: commands.map((command) => inlineCode(command.name)).join("\n"),
+      value: commands.map((command) => inlineCode(command.name)).join("\n")
     });
   }
 
-  message.reply({ embeds: [embed] });
+  return message.reply({ embeds: [embed] });
 }
 
 export default new MessageCommand({
   name: "help",
   category: "misc",
   description: "Shows help",
-  run: helpCommand,
+  run: helpCommand
 });
