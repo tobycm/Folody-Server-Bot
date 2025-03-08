@@ -6,6 +6,9 @@ export default new BotEvent({
   async run(client) {
     console.log(`Logged in as ${client.user!.tag}!`);
 
-    client.user!.setActivity("happy new year 2025 🎉", { type: ActivityType.Playing });
+    client.user!.setPresence({
+      activities: [{ name: `f!help · folodyplace.xyz`, type: ActivityType.Custom }],
+      status: `online`
+    });
   },
 });
