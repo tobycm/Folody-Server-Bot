@@ -41,6 +41,9 @@ export default new SlashCommand({
       fields++;
     }
 
+    if (embed.data.fields?.length) embeds.push(embed);
+    if (embeds.length === 0) return interaction.reply("Không có custom tag nào trong server này!");
+
     const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder().setCustomId("previous").setLabel("Previous").setStyle(ButtonStyle.Primary),
       new ButtonBuilder().setCustomId("next").setLabel("Next").setStyle(ButtonStyle.Primary),
