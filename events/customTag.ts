@@ -27,7 +27,7 @@ export default new BotEvent({
     const customTag = customTags[message.content.toLowerCase()];
     if (!customTag) return;
 
-    const cooldown = cooldowns.get(message.author.id);
+    const cooldown = cooldowns.get(message.content.toLowerCase());
     if ((cooldown?.timestamp || 0) + serverCooldown > Date.now()) return;
 
     message.channel.send(customTag.content);
