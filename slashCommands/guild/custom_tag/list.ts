@@ -9,13 +9,18 @@ import {
   SlashCommandBuilder,
   codeBlock,
   inlineCode,
+  userMention,
 } from "discord.js";
 import { checkPermissions } from "modules/checks/access";
 import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
 
+const data = new SlashCommandBuilder().setName("list_custom_tag").setDescription("List custom tags command");
+
+data.addBooleanOption((option) => option.setName("content").setDescription("Include tags' content in the response").setRequired(false));
+
 export default new SlashCommand({
-  data: new SlashCommandBuilder().setName("list_custom_tag").setDescription("List custom tags command"),
+  data,
   checks: [guildOnly, checkPermissions([PermissionFlagsBits.ManageMessages])],
   async run(interaction) {
     const folody = interaction.client as Folody;
@@ -24,20 +29,25 @@ export default new SlashCommand({
 
     if (Object.keys(customTags).length === 0) return interaction.reply("Không có custom tag nào trong server này!");
 
+    const includeContent = interaction.options.getBoolean("content");
+
     const embeds: EmbedBuilder[] = [];
 
     let embed = new EmbedBuilder().setTitle("Custom tags");
 
     let fields = 0;
 
-    for (const [tag, { content }] of Object.entries(customTags)) {
+    for (const [tag, { content, author }] of Object.entries(customTags)) {
       if (fields === 20 || embed.length + tag.length + content.length > 6000) {
         embeds.push(embed);
         embed = new EmbedBuilder().setTitle("Custom tags");
         fields = 0;
       }
 
-      embed.addFields({ name: inlineCode(tag) + ":", value: codeBlock(content.slice(0, 1000)) });
+      embed.addFields({
+        name: inlineCode(tag) + ": " + "Được tạo bởi " + userMention(author),
+        value: includeContent ? codeBlock(content.slice(0, 1000)) : "",
+      });
       fields++;
     }
 
@@ -56,6 +66,7 @@ export default new SlashCommand({
         content: `Trang ${current + 1} / ${embeds.length}`,
         embeds: [embeds[0]],
         components: embeds.length > 1 ? [actionRow] : [],
+        allowedMentions: { parse: [] },
       })
     )
       .createMessageComponentCollector({
@@ -80,7 +91,11 @@ export default new SlashCommand({
           }
           current--;
         }
-        interaction.editReply({ content: `Trang ${current + 1} / ${embeds.length}`, embeds: [embeds[current]] });
+        interaction.editReply({
+          content: `Trang ${current + 1} / ${embeds.length}`,
+          embeds: [embeds[current]],
+          allowedMentions: { parse: [] },
+        });
         itr.reply({ content: "👌", ephemeral: true });
       });
   },
