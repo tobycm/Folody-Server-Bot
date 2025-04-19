@@ -93,7 +93,7 @@ export default class Folody extends Client {
       embeds: [
         {
           title: "An error has occurred!",
-          description: codeBlock("js", error.stack || error.message),
+          description: codeBlock("js", JSON.stringify(error, null, 2)),
           color: this.branding.embedColor,
         },
       ],
