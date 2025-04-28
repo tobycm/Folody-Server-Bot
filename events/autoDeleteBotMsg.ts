@@ -8,6 +8,8 @@ export default new BotEvent({
       
       await new Promise((resolve) => setTimeout(resolve, 1000 * 15)); // 15s
       
+      if (!message) return;
+      
       message.delete();
     }
   },
