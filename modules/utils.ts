@@ -1,3 +1,5 @@
+import { execSync } from "child_process";
+
 export function secondsToTime(rawSeconds: number, colons?: true, doubleZeroInMinute?: true, day?: true): string {
   rawSeconds = Math.round(rawSeconds); // cho chắc
 
@@ -29,4 +31,12 @@ export function randomString(length: number) {
 
 export async function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function getCurrentGitHash() {
+  return execSync("git rev-parse HEAD").toString().trim();
+}
+
+export function getCurrentGitBranch() {
+  return execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
 }
