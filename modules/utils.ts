@@ -26,3 +26,7 @@ export function randomString(length: number) {
   for (let i = 0; i < length; i++) result += characters.charAt(Math.floor(Math.random() * characters.length));
   return result;
 }
+
+export async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
