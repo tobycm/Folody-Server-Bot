@@ -9,7 +9,7 @@ export default new SlashCommand({
       `Made by ${userMention("487597510559531009")}\n\n` +
         `Version: ${inlineCode(getCurrentGitHash().slice(-7))} on ${inlineCode(getCurrentGitBranch())}\n` +
         `Ping: ${inlineCode(String(interaction.client.ws.ping))}ms\n` +
-        `Uptime: ${inlineCode(secondsToTime(interaction.client.uptime))}ms\n`,
+        `Uptime: ${inlineCode(secondsToTime(interaction.client.uptime / 1000))}ms\n`,
     );
   },
 });
