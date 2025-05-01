@@ -7,7 +7,7 @@ export default new BotEvent({
     console.log(`Logged in as ${client.user!.tag}!`);
 
     client.user!.setPresence({
-      activities: [{ name: `f!help`, type: ActivityType.Custom }],
+      activities: [{ name: `⭐`, type: ActivityType.Custom }],
       status: `online`
     });
   },
