@@ -7,6 +7,8 @@ export default new BotEvent({
     const channel = newState.channel;
     if (!channel) return;
 
+    if (oldState.channel) return;
+
     const member = newState.member;
     if (!member) return;
 
