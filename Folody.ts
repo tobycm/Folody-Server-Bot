@@ -1,5 +1,3 @@
-import { readFileSync } from "fs";
-
 import { Client, ClientOptions, GatewayIntentBits, Snowflake, codeBlock } from "discord.js";
 
 import { QuickDB } from "quick.db";
@@ -12,8 +10,6 @@ import loadEvents from "handlers/eventLoader";
 
 import { MessageCommand, SlashCommand } from "modules/command";
 
-const package_json = JSON.parse(readFileSync("./package.json", "utf-8"));
-
 interface BrandingOptions {
   embedColor: number;
   emojis: {
@@ -23,7 +19,6 @@ interface BrandingOptions {
 }
 
 interface Options extends ClientOptions {
-  version: string;
   prefix?: string;
 
   owners?: string[];
@@ -36,7 +31,6 @@ export default class Folody extends Client {
   constructor(options: Options) {
     super(options);
 
-    this.version = options.version;
     this.defaultPrefix = options.prefix || "nh!";
     this.prefixes = new Map<Snowflake, string>();
 
@@ -62,7 +56,6 @@ export default class Folody extends Client {
 
   private readonly defaultPrefix: string;
 
-  public readonly version: string;
   private readonly prefixes: Map<Snowflake, string>;
 
   public async getPrefix(guildID: Snowflake): Promise<string> {
@@ -113,7 +106,6 @@ export default class Folody extends Client {
 
 const folody = new Folody({
   intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
-  version: package_json.version,
   prefix: config.bot.prefix,
 
   owners: config.bot.owners,
