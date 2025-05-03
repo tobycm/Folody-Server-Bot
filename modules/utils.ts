@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+import { inspect } from "util";
 
 export function secondsToTime(rawSeconds: number, colons?: true, doubleZeroInMinute?: true, day?: true): string {
   rawSeconds = Math.round(rawSeconds); // cho chắc
@@ -39,4 +40,10 @@ export function getCurrentGitHash() {
 
 export function getCurrentGitBranch() {
   return execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
+}
+
+export function bareStringify(obj: any, depth = 3) {
+  return inspect(obj, {
+    depth,
+  });
 }

@@ -2,13 +2,18 @@ import { codeBlock, Message } from "discord.js";
 import Folody from "Folody";
 import { checkOwner } from "modules/checks/access";
 import { MessageCommand } from "modules/command";
+import { bareStringify } from "modules/utils";
 import { inspect } from "util";
 
-async function evalCommand(message: Message<true>) {
-  let code = message.content.slice(((await (message.client as Folody).getPrefix(message.guild.id)) + "eval").length).trim();
+async function evalCommand(message: Message) {
+  const folody = message.client as Folody;
+
+  let code = message.content.slice(((message.guild ? await folody.getPrefix(message.guild.id) : "f!") + "eval").length).trim();
 
   if ((code.startsWith("```js") && code.endsWith("```")) || (code.startsWith("```ts") && code.endsWith("```"))) code = code.slice(5, -3);
   else if (code.startsWith("```") && code.endsWith("```")) code = code.slice(3, -3);
+
+  bareStringify;
 
   try {
     const eval_result = await eval("(async () =>{" + code + "})()");

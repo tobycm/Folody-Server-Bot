@@ -10,6 +10,7 @@ pipeline {
       steps {
         dir('/home/toby/coding/typescript/folody-Server-Bot') {
           sh 'git pull'
+          sh 'pnpm install'
         }
       }
     }

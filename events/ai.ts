@@ -1,7 +1,7 @@
-import { Events } from "discord.js";
+import { Events, User } from "discord.js";
 import Folody from "Folody";
 import BotEvent from "modules/event";
-import { sleep } from "modules/utils";
+import { bareStringify, sleep } from "modules/utils";
 
 export default new BotEvent({
   event: Events.MessageCreate,
@@ -23,16 +23,31 @@ export default new BotEvent({
 
     const prompt =
       (await folody.db.get<string>(`${message.guild.id}.ai.prompt`)) ||
-      `bạn là một trợ lý rất hữu ích. bạn là ${message.client}, bạn đang ở một server discord có thông tin là ${message.guild}, đây là message đã kêu gọi bạn: ${message}`;
+      `bạn là một trợ lý rất hữu ích. bạn là ${bareStringify(message.client)}, bạn đang ở một server discord có thông tin là ${bareStringify(message.guild)}, đây là message đã kêu gọi bạn: ${bareStringify(message)}`;
 
     const history = Array.from(message.channel.messages.cache.values())
-      .slice(-10)
-      .sort((a, b) => b.createdTimestamp - a.createdTimestamp);
+      .slice(-28)
+      .sort((a, b) => a.createdTimestamp - b.createdTimestamp);
+
+    const relatedMembers = new Set<User>();
+    for (const msg of history) {
+      if (msg.author.id === message.author.id) continue;
+      relatedMembers.add(msg.author);
+    }
 
     const completions = await folody.ai.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
-        { role: "system", content: prompt + `\n\nChannel history: ${history.map((msg) => `${msg.author.username}: ${msg.content}`).join("\n")}` },
+        {
+          role: "system",
+          content:
+            prompt +
+            `You are ${bareStringify(message.client)}, this message will provide a lot of information about your environment: ${bareStringify(message, 5)}` +
+            `\n\nChannel history: ${history.map((msg) => bareStringify({ author: msg.author, content: msg.content })).join("\n")}` +
+            `\n\nRelated members: ${Array.from(relatedMembers)
+              .map((user) => bareStringify(user))
+              .join(", ")}`,
+        },
         { role: "user", content: message.content },
       ],
     });
