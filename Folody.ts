@@ -112,6 +112,7 @@ export default class Folody extends Client {
 
 const folody = new Folody({
   ai: {
+    apiKey: "a",
     baseURL: "https://ai.hackclub.com",
   },
   intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
