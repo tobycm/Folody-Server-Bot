@@ -24,10 +24,15 @@ export default new BotEvent({
       (await folody.db.get<string>(`${message.guild.id}.ai.prompt`)) ||
       `bạn là một trợ lý rất hữu ích. bạn là ${message.client}, bạn đang ở một server discord có thông tin là ${message.guild}, đây là message đã kêu gọi bạn: ${message}`;
 
+    const history = Array.from(message.channel.messages.cache.values())
+      .slice(-10)
+      .sort((a, b) => b.createdTimestamp - a.createdTimestamp);
+
     const completions = await folody.ai.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
         { role: "system", content: prompt },
+        { role: "system", content: `Đây là lịch sử hội thoại: ${history.map((msg) => `${msg.author.username}: ${msg.content}`).join("\n")}` },
         { role: "user", content: message.content },
       ],
     });
