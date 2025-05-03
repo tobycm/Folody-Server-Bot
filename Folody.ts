@@ -9,6 +9,7 @@ import database from "handlers/databaseLoader";
 import loadEvents from "handlers/eventLoader";
 
 import { MessageCommand, SlashCommand } from "modules/command";
+import OpenAI, { ClientOptions as AIOptions } from "openai";
 
 interface BrandingOptions {
   embedColor: number;
@@ -19,6 +20,7 @@ interface BrandingOptions {
 }
 
 interface Options extends ClientOptions {
+  ai?: AIOptions;
   prefix?: string;
 
   owners?: string[];
@@ -30,6 +32,8 @@ interface Options extends ClientOptions {
 export default class Folody extends Client {
   constructor(options: Options) {
     super(options);
+
+    this.ai = options.ai ? new OpenAI(options.ai) : undefined;
 
     this.defaultPrefix = options.prefix || "nh!";
     this.prefixes = new Map<Snowflake, string>();
@@ -53,6 +57,8 @@ export default class Folody extends Client {
     loadEvents(this);
     loadCommands(this);
   }
+
+  public readonly ai?: OpenAI;
 
   private readonly defaultPrefix: string;
 
@@ -105,6 +111,9 @@ export default class Folody extends Client {
 }
 
 const folody = new Folody({
+  ai: {
+    baseURL: "https://ai.hackclub.com",
+  },
   intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
   prefix: config.bot.prefix,
 
