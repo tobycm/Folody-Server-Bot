@@ -1,6 +1,7 @@
 import { Events } from "discord.js";
 import Folody from "Folody";
 import BotEvent from "modules/event";
+import { sleep } from "modules/utils";
 
 export default new BotEvent({
   event: Events.MessageCreate,
@@ -36,9 +37,32 @@ export default new BotEvent({
       ],
     });
 
-    message.reply({
-      content: completions.choices[0].message.content ?? "có gì đó sai sai, bạn có thể thử lại không?",
-      allowedMentions: { parse: ["users"] },
-    });
+    if (!completions.choices[0].message.content) {
+      return message.reply("có gì đó sai sai, bạn có thể thử lại không?");
+    }
+
+    const parts: string[] = [];
+    let currentPart = "";
+
+    for (const part of completions.choices[0].message.content.split("\n")) {
+      if (currentPart.length + part.length > 2000) {
+        parts.push(currentPart);
+        currentPart = "";
+      }
+      currentPart += part + "\n";
+    }
+
+    if (currentPart) {
+      parts.push(currentPart);
+    }
+
+    for (const part of parts) {
+      message.reply({
+        content: part,
+        allowedMentions: { parse: ["users"] },
+      });
+
+      await sleep(1000);
+    }
   },
 });
