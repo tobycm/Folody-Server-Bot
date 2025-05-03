@@ -18,6 +18,8 @@ export default new BotEvent({
 
     if (!allowedChannels.includes(message.channel.id)) return;
 
+    await message.channel.sendTyping();
+
     const prompt =
       (await folody.db.get<string>(`${message.guild.id}.ai.prompt`)) ||
       `bạn là một trợ lý rất hữu ích. bạn là ${message.client}, bạn đang ở một server discord có thông tin là ${message.guild}, đây là message đã kêu gọi bạn: ${message}`;
@@ -30,7 +32,7 @@ export default new BotEvent({
       ],
     });
 
-    message.channel.send({
+    message.reply({
       content: completions.choices[0].message.content ?? "có gì đó sai sai, bạn có thể thử lại không?",
       allowedMentions: { parse: ["users"] },
     });
