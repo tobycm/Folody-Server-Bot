@@ -31,8 +31,7 @@ export default new BotEvent({
     const completions = await folody.ai.chat.completions.create({
       model: "llama-3.3-70b-versatile",
       messages: [
-        { role: "system", content: prompt },
-        { role: "system", content: `Đây là lịch sử hội thoại: ${history.map((msg) => `${msg.author.username}: ${msg.content}`).join("\n")}` },
+        { role: "system", content: prompt + `\n\nChannel history: ${history.map((msg) => `${msg.author.username}: ${msg.content}`).join("\n")}` },
         { role: "user", content: message.content },
       ],
     });
