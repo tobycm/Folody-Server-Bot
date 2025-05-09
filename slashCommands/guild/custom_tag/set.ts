@@ -4,7 +4,7 @@ import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
 
 export default new SlashCommand({
-  data: new SlashCommandBuilder().setName("custom_tag").setDescription("Custom tag command"),
+  data: new SlashCommandBuilder().setName("custom_tag").setDescription("Tạo tag tùy chỉnh"),
   checks: [guildOnly, checkPermissions([PermissionFlagsBits.ManageMessages])],
   async run(interaction) {
     const modal = new ModalBuilder().setCustomId("tag_modal").setTitle("Custom tag");

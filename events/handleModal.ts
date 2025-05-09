@@ -19,5 +19,12 @@ export default new BotEvent({
       folody.db.set<CustomTags>(`${interaction.guild!.id}.customTags`, customTags);
       return interaction.reply({ content: `Đã tạo tag ${inlineCode(tag)} thành công!` });
     }
+    if (interaction.customId === "prompt_modal") {
+      const folody = interaction.client as Folody;
+      const prompt = interaction.fields.getTextInputValue("ai_prompt");
+
+      folody.db.set<string>(`${interaction.guild!.id}.ai.prompt`, prompt);
+      return interaction.reply({ content: `Đã thay đổi prompt thành công!` });
+    }
   },
 });

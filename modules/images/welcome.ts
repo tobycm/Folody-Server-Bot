@@ -5,7 +5,7 @@ import { weirdToNormalChars } from "weird-to-normal-chars";
 
 registerFont("./assets/Uni_Sans_Heavy.otf", { family: "Discord" });
 registerFont("./assets/DejaVuSansCondensed-Bold.ttf", {
-  family: "Discordx",
+  family: "Discordx"
 });
 
 const pictures: string[] = [

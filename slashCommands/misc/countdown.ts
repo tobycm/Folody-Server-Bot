@@ -24,7 +24,7 @@ function timeNumberToEmoji(time: string) {
   return emojiString;
 }
 
-const data = new SlashCommandBuilder().setName("countdown").setDescription("Starts a countdown");
+const data = new SlashCommandBuilder().setName("countdown").setDescription("Đếm ngược thời gian");
 
 data
   .addIntegerOption((option) => option.setName("time").setDescription("Time in seconds").setRequired(true).setAutocomplete(true))

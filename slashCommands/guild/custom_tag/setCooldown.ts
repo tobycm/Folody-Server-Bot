@@ -5,7 +5,7 @@ import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
 import { secondsToTime } from "modules/utils";
 
-const data = new SlashCommandBuilder().setName("set_custom_tag_cooldown").setDescription("Set custom tag cooldown");
+const data = new SlashCommandBuilder().setName("set_custom_tag_cooldown").setDescription("Đặt thời gian chờ giữa các lần sử dụng tag")
 
 data.addIntegerOption((option) =>
   option.setName("cooldown").setDescription("Server custom tag cooldown (in ms)").setRequired(true).setMinValue(1000).setAutocomplete(true),

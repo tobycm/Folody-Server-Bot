@@ -23,7 +23,7 @@ export default new BotEvent({
 
     const prompt =
       (await folody.db.get<string>(`${message.guild.id}.ai.prompt`)) ||
-      `bạn là một trợ lý rất hữu ích. bạn là ${bareStringify(message.client)}, bạn đang ở một server discord có thông tin là ${bareStringify(message.guild)}, đây là message đã kêu gọi bạn: ${bareStringify(message)}`;
+      `bạn là một trợ lý rất hữu ích có thông tin là ${bareStringify(message.client)}, bạn đang ở một máy chủ discord có thông tin là ${bareStringify(message.guild)}, đây là tin nhắn đã kêu gọi bạn: ${bareStringify(message)}`;
 
     const history = Array.from(message.channel.messages.cache.values())
       .slice(-28)
@@ -42,18 +42,21 @@ export default new BotEvent({
           role: "system",
           content:
             prompt +
-            `You are ${bareStringify(message.client)}, this message will provide a lot of information about your environment: ${bareStringify(message, 5)}` +
-            `\n\nChannel history: ${history.map((msg) => bareStringify({ author: msg.author, content: msg.content })).join("\n")}` +
+            `\n\nYou are ${bareStringify(message.client)}, this message will provide a lot of information about your environment: ${bareStringify(message, 5)}` +
+            `\n\nChat history: ${history.map((msg) => bareStringify({ author: msg.author, content: msg.content })).join("\n")}` +
             `\n\nRelated members: ${Array.from(relatedMembers)
               .map((user) => bareStringify(user))
               .join(", ")}`,
         },
-        { role: "user", content: message.content },
-      ],
+        {
+          role: "user",
+          content: message.content
+        }
+      ]
     });
 
     if (!completions.choices[0].message.content) {
-      return message.reply("có gì đó sai sai, bạn có thể thử lại không?");
+      return message.reply("Có gì đó sai sai, bạn có thể thử lại không?");
     }
 
     const parts: string[] = [];
@@ -73,8 +76,7 @@ export default new BotEvent({
 
     for (const part of parts) {
       message.reply({
-        content: part,
-        allowedMentions: { parse: ["users"] },
+        content: part
       });
 
       await sleep(1000);

@@ -15,7 +15,7 @@ import { checkPermissions } from "modules/checks/access";
 import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
 
-const data = new SlashCommandBuilder().setName("list_custom_tag").setDescription("List custom tags command");
+const data = new SlashCommandBuilder().setName("list_custom_tag").setDescription("Xem danh sách custom tag trong server này");
 
 data.addBooleanOption((option) => option.setName("content").setDescription("Include tags' content in the response").setRequired(false));
 
@@ -65,36 +65,29 @@ export default new SlashCommand({
       await interaction.reply({
         content: `Trang ${current + 1} / ${embeds.length}`,
         embeds: [embeds[0]],
-        components: embeds.length > 1 ? [actionRow] : [],
-        allowedMentions: { parse: [] },
+        components: embeds.length > 1 ? [actionRow] : []
       })
     )
       .createMessageComponentCollector({
         filter: (itr) => itr.user.id === interaction.user.id && ["next", "previous"].includes(itr.customId),
-        time: 60000,
+        time: 60000
       })
       .on("collect", async (itr) => {
         if (itr.customId === "next") {
           if (current == embeds.length - 1) {
-            itr.reply({ content: "Có gì để next đâu bro", ephemeral: true });
-            return;
+            return itr.reply({ content: "Có gì để next đâu bro", ephemeral: true });
           }
           current++;
         }
         if (itr.customId === "previous") {
           if (current == 0) {
-            itr.reply({
-              content: "Có gì để quay lại đâu bro",
-              ephemeral: true,
-            });
-            return;
+            return itr.reply({ content: "Có gì để quay lại đâu bro", ephemeral: true });
           }
           current--;
         }
         interaction.editReply({
           content: `Trang ${current + 1} / ${embeds.length}`,
-          embeds: [embeds[current]],
-          allowedMentions: { parse: [] },
+          embeds: [embeds[current]]
         });
         itr.reply({ content: "👌", ephemeral: true });
       });

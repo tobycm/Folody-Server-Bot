@@ -13,8 +13,7 @@ export default new BotEvent({
     if (!member) return;
 
     channel.send({
-      content: `Có bạn ${userMention(member.id)} vừa tham gia voice nè!`,
-      allowedMentions: { parse: [] },
+      content: `Có bạn ${userMention(member.id)} vừa tham gia voice nè!`
     });
   },
 });

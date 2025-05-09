@@ -5,7 +5,7 @@ import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
 
 export default new SlashCommand({
-  data: new SlashCommandBuilder().setName("ai").setDescription("oh mai gatto is that ai slop"),
+  data: new SlashCommandBuilder().setName("ai").setDescription("Đặt kênh AI"),
   checks: [guildOnly, checkPermissions([PermissionFlagsBits.ManageMessages])],
   async run(interaction) {
     const folody = interaction.client as Folody;

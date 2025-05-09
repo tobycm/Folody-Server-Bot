@@ -5,7 +5,7 @@ import { checkPermissions } from "modules/checks/access";
 import { guildOnly } from "modules/checks/guild";
 import { SlashCommand } from "modules/command";
 
-const data = new SlashCommandBuilder().setName("delete_custom_tag").setDescription("Delete a custom tag");
+const data = new SlashCommandBuilder().setName("delete_custom_tag").setDescription("Xoá tag tùy chỉnh");
 
 data.addStringOption((option) => option.setName("tag").setDescription("Tag name").setRequired(true));
 

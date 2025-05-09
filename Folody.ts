@@ -35,7 +35,7 @@ export default class Folody extends Client {
 
     this.ai = options.ai ? new OpenAI(options.ai) : undefined;
 
-    this.defaultPrefix = options.prefix || "nh!";
+    this.defaultPrefix = options.prefix || "f!";
     this.prefixes = new Map<Snowflake, string>();
 
     this.owners = options.owners || [];
@@ -93,9 +93,9 @@ export default class Folody extends Client {
         {
           title: "An error has occurred!",
           description: codeBlock("js", JSON.stringify(error, null, 2)),
-          color: this.branding.embedColor,
-        },
-      ],
+          color: this.branding.embedColor
+        }
+      ]
     });
   }
 
@@ -116,10 +116,13 @@ const folody = new Folody({
     baseURL: "https://ai.hackclub.com",
   },
   intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
+  allowedMentions: {
+    repliedUser: false
+  },
   prefix: config.bot.prefix,
 
   owners: config.bot.owners,
-  managers: config.bot.managers,
+  managers: config.bot.managers
 });
 
 folody.login(config.bot.token);

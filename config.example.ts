@@ -4,16 +4,16 @@ export default {
     owners: [""],
     managers: [""],
     channels: {
-      error: "",
+      error: ""
     },
-    prefix: "",
+    prefix: ""
   },
   branding: {
     embedColor: 14406149,
     emojis: {
       error: "<a:alert:1081902415701356605>",
-      loading: "<a:loading:1027196377245155348>",
+      loading: "<a:loading:1027196377245155348>"
     },
-    banners: [],
-  },
+    banners: []
+  }
 };
