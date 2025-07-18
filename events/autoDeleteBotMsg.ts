@@ -8,7 +8,7 @@ export default new BotEvent({
     if (!message.author.bot) return;
     if (message.channel.id !== "955639718815621151") return;
 
-    await sleep(1000 * 60 * 5); // 5 mins
+    await sleep(1000 * 60 * 15); // 15 mins
 
     if (!message) return;
 
